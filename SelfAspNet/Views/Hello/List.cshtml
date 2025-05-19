@@ -4,9 +4,10 @@
     ViewData["Title"] = "List";
 }
 
-<table>
+<table class="table">
     <thead>
         <tr>
+            <th>ID</th>
             <th>ISBNコード</th>
             <th>書名</th>
             <th>価格</th>
@@ -19,6 +20,7 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@item.Id</td>
                 <td>@item.Isbn</td>
                 <td>@item.Title</td>
                 <td>@item.Price</td>
