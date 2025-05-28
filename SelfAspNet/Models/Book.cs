@@ -8,6 +8,7 @@ public class Book
     [Display(Name = "ID")]
     public int Id { get; set; }
     [Display(Name = "ISBN")]
+    [DataType(DataType.ImageUrl)]
     public string Isbn { get; set; } = String.Empty;
     [Display(Name = "タイトル")]
     public string Title { get; set; } = String.Empty;
