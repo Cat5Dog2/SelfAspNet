@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label asp-for="Publisher" class="control-label"></label>
                 <select asp-for="Publisher" class="form-control"
-                    asp-items="ViewBag.Opts"></select>
+                    asp-items="Html.GetEnumSelectList<Publisher>()"></select>
                 @*<input asp-for="Publisher" class="form-control" />*@
                 <span asp-validation-for="Publisher" class="text-danger"></span>
             </div>
