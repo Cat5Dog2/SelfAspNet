@@ -11,6 +11,7 @@ public class Book
     public string Isbn { get; set; } = String.Empty;
     [Display(Name = "タイトル")]
     public string Title { get; set; } = String.Empty;
+    [DataType(DataType.Currency)]
     [Display(Name = "価格")]
     public int Price { get; set; }
     [Display(Name = "出版社")]
