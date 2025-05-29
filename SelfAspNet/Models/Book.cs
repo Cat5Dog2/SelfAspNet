@@ -18,6 +18,7 @@ public class Book
     [Display(Name = "出版社")]
     public string Publisher { get; set; } = String.Empty;
     [Display(Name = "刊行日")]
+    [DataType(DataType.Date)]
     public DateTime Published { get; set; }
     [Display(Name = "配布サンプル")]
     public bool Sample { get; set; }
