@@ -1,4 +1,5 @@
 ﻿@model System.String
 
-<img src="https://wings.msn.to/books/@(Model)/@(Model)_logo.jpg"
-    alt="@Model" width="@ViewBag.width" height="@ViewBag.height" />
+@* <img src="https://wings.msn.to/books/@(Model)/@(Model)_logo.jpg"
+    alt="@Model" width="@ViewBag.width" height="@ViewBag.height" /> *@
+@Html.Cover(Model, new { height = ViewBag.height, width = ViewBag.width });
