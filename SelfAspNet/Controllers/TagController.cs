@@ -45,5 +45,10 @@ public class TagController : Controller
         return View();
     }
 
+    public IActionResult Highlight()
+    {
+        return View();
+    }
+
 }
 
