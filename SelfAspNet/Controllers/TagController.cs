@@ -34,5 +34,11 @@ public class TagController : Controller
         return View();
     }
 
+    public IActionResult Cover()
+    {
+        ViewBag.Isbn = "978-4-7981-7556-0";
+        return View();
+    }
+
 }
 
