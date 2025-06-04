@@ -28,6 +28,11 @@ public class TagController : Controller
         return View(await _db.Books.FindAsync(id));
     }
 
+    public async Task<IActionResult> Link(int id = 1)
+    {
+        return View(await _db.Books.FindAsync(id));
+    }
+
     // GET: TagController
     public ActionResult Index()
     {
