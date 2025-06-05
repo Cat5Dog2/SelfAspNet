@@ -22,5 +22,10 @@ public class CommonController : Controller
         return View();
     }
 
+    public IActionResult Nest()
+    {
+        return View();
+    }
+
 }
 
