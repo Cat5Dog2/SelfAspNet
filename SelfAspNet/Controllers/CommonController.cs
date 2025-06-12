@@ -27,5 +27,15 @@ public class CommonController : Controller
         return View();
     }
 
+    public IActionResult List()
+    {
+        return View(_db.Books);
+    }
+
+    public IActionResult List2()
+    {
+        return View(_db.Books);
+    }
+
 }
 
