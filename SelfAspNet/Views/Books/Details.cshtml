@@ -1,0 +1,17 @@
+@model SelfAspNet.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>書籍詳細</h1>
+
+<div>
+    <h4>書籍</h4>
+    <hr />
+    @Html.DisplayForModel()
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">編集</a> |
+    <a asp-action="Index">一覧に戻る</a>
+</div>

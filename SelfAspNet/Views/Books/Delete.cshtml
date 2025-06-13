@@ -1,0 +1,19 @@
+@model SelfAspNet.Models.Book
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>削除</h1>
+
+<h3>削除しますか？</h3>
+<div>
+    <h4>書籍</h4>
+    <hr />
+    @Html.DisplayForModel()
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="削除" class="btn btn-danger" /> |
+        <a asp-action="Index">一覧に戻る</a>
+    </form>
+</div>
