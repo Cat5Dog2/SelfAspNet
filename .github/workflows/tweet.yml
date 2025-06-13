@@ -13,11 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Get current timestamp
+        id: get_ts
+        run: |
+          echo "timestamp=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+
       - name: Post commit message on push
         if: github.event_name == 'push'
-        uses: nearform-actions/github-action-notify-twitter@master
+        uses: nearform-actions/github-action-notify-twitter@v1.2.3
         with:
           message: |
+            Time: ${{ steps.get_ts.outputs.timestamp }}
             Repo: ${{ github.repository }}
             Branch: ${{ github.ref_name }}
             Commit: ${{ github.event.head_commit.message }}
@@ -29,9 +35,10 @@ jobs:
 
       - name: Post PR info to Twitter
         if: github.event_name == 'pull_request'
-        uses: nearform-actions/github-action-notify-twitter@master
+        uses: nearform-actions/github-action-notify-twitter@v1.2.3
         with:
           message: |
+            Time: ${{ steps.get_ts.outputs.timestamp }}
             Repo: ${{ github.repository }}
             Branch: ${{ github.head_ref }}
             PR #${{ github.event.pull_request.number }}
