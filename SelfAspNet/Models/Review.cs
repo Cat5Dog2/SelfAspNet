@@ -13,7 +13,7 @@ public class Review
     [Display(Name ="レビュー")]
     public string Body { get; set; } = String.Empty;
     [Display(Name ="更新日")]
-    public DateTime LastUpdate { get; set; } = DateTime.Now;
+    public DateTime LastUpdated { get; set; } = DateTime.Now;
     [Display(Name ="書籍")]
     public int BookId { get; set; }
     public Book Book { get; set; } = null!;
