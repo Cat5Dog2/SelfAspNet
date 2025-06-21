@@ -1,21 +1,24 @@
 @model SelfAspNet.Models.Book
 
-<h3>@Model.Title</h3>
-<ul>
-    <li>
-        著者：
-        @foreach(var author in Model.Authors)
-        {
-            @: @author.PenName (@author.User.Name) /
-        }
-    </li>
-    <li>価格：@Model.Price 円</li>
-    <li>出版社：@Model.Publisher</li>
-</ul>
-<hr>
-<ol>
-    @foreach(var rev in Model.Reviews)
+<h1>@Model.Title</h1>
+<dl>
+    <dt>著者</dt>
+    @foreach(var author in Model.Authors)
     {
-        <li>@rev.Body (@rev.Name)</li>
+    <dd>@author.PenName (@author.User.Name)</dd>
     }
-</ol>
+    <dt>価格</dt>
+    <dd>@Model.Price 円</dd>
+    <dt>出版社</dt>
+    <dd>@Model.Publisher</dd>
+</dl>
+<hr>
+<section>
+    <h2>レビュー</h2>
+    <ol>
+        @foreach(var rev in Model.Reviews)
+        {
+            <li>@rev.Body (@rev.Name)</li>
+        }
+    </ol>
+</section>
