@@ -11,9 +11,11 @@ builder.Services.AddTransient<ITagHelperComponent, MetaTagHelperComponent>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("MyContext")
-    )
+    options
+        .UseLazyLoadingProxies()
+        .UseSqlServer(
+            builder.Configuration.GetConnectionString("MyContext")
+        )
 );
 
 var app = builder.Build();
