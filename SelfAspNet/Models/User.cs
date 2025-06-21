@@ -18,5 +18,5 @@ public class User
     [Display(Name = "ニュース希望")]
     public bool NeedNews { get; set; }
 
-    public Author? Author { get; set; }
+    public virtual Author? Author { get; set; }
 }

@@ -11,7 +11,7 @@ public class Author
     public string PenName { get; set; } = String.Empty;
     [Display(Name = "ユーザー")]
     public int UserId { get; set; }
-    public User User { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
     [JsonIgnore]
-    public ICollection<Book> Books = new List<Book>();
+    public virtual ICollection<Book> Books { get; } = new List<Book>();
 }
