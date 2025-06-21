@@ -15,10 +15,17 @@
 <hr>
 <section>
     <h2>レビュー</h2>
-    <ol>
-        @foreach(var rev in Model.Reviews)
-        {
-            <li>@rev.Body (@rev.Name)</li>
-        }
-    </ol>
+    @if(Model.Reviews?.Any() == true)
+    {
+        <ol>
+            @foreach(var rev in Model.Reviews)
+            {
+                <li>@rev.Body (@rev.Name)</li>
+            }
+        </ol>
+    }
+    else
+    {
+        <p>レビューがありません。</p>
+    }
 </section>
