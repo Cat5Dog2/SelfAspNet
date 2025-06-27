@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using SelfAspNet.Helpers;
 using SelfAspNet.Models;
+using SelfAspNet.CompiledModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyContext>(options =>
     options
         .UseLazyLoadingProxies()
+        .UseModel(MyContextModel.Instance)
         .UseSqlServer(
             builder.Configuration.GetConnectionString("MyContext")
         )
