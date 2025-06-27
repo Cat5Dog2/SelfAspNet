@@ -11,7 +11,7 @@ namespace SelfAspNet.CompiledModels
     public partial class MyContextModel
     {
         private MyContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("cb15e0cd-5bb8-44be-b644-3174b99c4239"), entityTypeCount: 9)
+            : base(skipDetectChanges: false, modelId: new Guid("0789a23d-9f02-48fc-af8f-10ded5453440"), entityTypeCount: 9)
         {
         }
 
