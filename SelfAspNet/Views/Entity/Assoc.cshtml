@@ -1,0 +1,31 @@
+@model SelfAspNet.Models.Book
+
+<h1>@Model.Title</h1>
+<dl>
+    <dt>著者</dt>
+    @foreach(var author in Model.Authors)
+    {
+    <dd>@author.PenName (@author.User.Name)</dd>
+    }
+    <dt>価格</dt>
+    <dd>@Model.Price 円</dd>
+    <dt>出版社</dt>
+    <dd>@Model.Publisher</dd>
+</dl>
+<hr>
+<section>
+    <h2>レビュー</h2>
+    @if(Model.Reviews?.Any() == true)
+    {
+        <ol>
+            @foreach(var rev in Model.Reviews)
+            {
+                <li>@rev.Body (@rev.Name)</li>
+            }
+        </ol>
+    }
+    else
+    {
+        <p>レビューがありません。</p>
+    }
+</section>

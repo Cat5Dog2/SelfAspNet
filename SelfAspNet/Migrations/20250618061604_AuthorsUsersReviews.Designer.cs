@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SelfAspNet.Models;
 
@@ -11,16 +12,15 @@ using SelfAspNet.Models;
 namespace SelfAspNet.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20250618061604_AuthorsUsersReviews")]
+    partial class AuthorsUsersReviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -94,102 +94,6 @@ namespace SelfAspNet.Migrations
                         {
                             BooksId = 10,
                             AuthorsId = 5
-                        });
-                });
-
-            modelBuilder.Entity("SelfAspNet.Models.Article", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("LastUpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Articles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Category = "JavaScript",
-                            CreatedAt = new DateTime(2023, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(2023, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "ますます便利になるTypeScript！",
-                            Url = "https://codezine.jp/article/corner/992"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Category = "JavaScript",
-                            CreatedAt = new DateTime(2023, 12, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(2023, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Remixを通じてWebを学ぶ",
-                            Url = "https://codezine.jp/article/corner/942"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Category = "JavaScript",
-                            CreatedAt = new DateTime(2023, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(2023, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Web Componentsを基礎から学ぶ",
-                            Url = "https://codezine.jp/article/corner/927"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Category = "Rails",
-                            CreatedAt = new DateTime(2023, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(2023, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Railsの新機能を知ろう！",
-                            Url = "https://codezine.jp/article/corner/991"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Category = "Rails",
-                            CreatedAt = new DateTime(2023, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(2023, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Railsによるクライアントサイド開発入門",
-                            Url = "https://codezine.jp/article/corner/919"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Category = "Rust",
-                            CreatedAt = new DateTime(2023, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "現場で役立つRust入門",
-                            Url = "https://atmarkit.itmedia.co.jp/ait/series/36943/"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Category = "Rust",
-                            CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastUpdatedAt = new DateTime(2024, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "基本からしっかり学ぶRust入門",
-                            Url = "https://atmarkit.itmedia.co.jp/ait/series/24844/"
                         });
                 });
 
@@ -390,34 +294,6 @@ namespace SelfAspNet.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SelfAspNet.Models.ErrorLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Accessed")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Stacktrace")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ErrorLogs");
-                });
-
             modelBuilder.Entity("SelfAspNet.Models.Meta", b =>
                 {
                     b.Property<int>("Id")
@@ -471,31 +347,6 @@ namespace SelfAspNet.Migrations
                             Controller = "Tag",
                             Name = "description"
                         });
-                });
-
-            modelBuilder.Entity("SelfAspNet.Models.Photo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<byte[]>("Content")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("SelfAspNet.Models.Review", b =>

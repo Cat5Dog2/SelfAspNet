@@ -22,4 +22,7 @@ public class Book
     public DateTime Published { get; set; }
     [Display(Name = "配布サンプル")]
     public bool Sample { get; set; }
+
+    public virtual ICollection<Review> Reviews { get; } = new List<Review>();
+    public virtual ICollection<Author> Authors { get; } = new List<Author>();
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using SelfAspNet.Helpers;
 using SelfAspNet.Models;
+using SelfAspNet.CompiledModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,12 @@ builder.Services.AddTransient<ITagHelperComponent, MetaTagHelperComponent>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("MyContext")
-    )
+    options
+        .UseLazyLoadingProxies()
+        .UseModel(MyContextModel.Instance)
+        .UseSqlServer(
+            builder.Configuration.GetConnectionString("MyContext")
+        )
 );
 
 var app = builder.Build();
