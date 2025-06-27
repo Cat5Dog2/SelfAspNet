@@ -10,7 +10,10 @@ public class MyContext : DbContext
     public DbSet<Review> Reviews { get; set; } = default!;
     public DbSet<Author> Authors { get; set; } = default!;
     public DbSet<User> Users { get; set; } = default!;
+    public DbSet<ErrorLog> ErrorLogs { get; set; } = default!;
+    public DbSet<Article> Articles { get; set; } = default!;
     public DbSet<Meta> Metas { get; set; } = default!;
+    public DbSet<Photo> Photos { get; set; } = default!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -223,7 +226,76 @@ public class MyContext : DbContext
                     BookId = 2
                 }
             );
-        
+
+        builder.Entity<Article>(e =>
+        {
+            e.HasData(
+                new Article
+                {
+                    Id = 1,
+                    Title = "ますます便利になるTypeScript！",
+                    Url = "https://codezine.jp/article/corner/992",
+                    Category = "JavaScript",
+                    CreatedAt = new DateTime(2023, 12, 21),
+                    LastUpdatedAt = new DateTime(2023, 12, 22)
+                },
+                new Article
+                {
+                    Id = 2,
+                    Title = "Remixを通じてWebを学ぶ",
+                    Url = "https://codezine.jp/article/corner/942",
+                    Category = "JavaScript",
+                    CreatedAt = new DateTime(2023, 12, 23),
+                    LastUpdatedAt = new DateTime(2023, 12, 24)
+                },
+                new Article
+                {
+                    Id = 3,
+                    Title = "Web Componentsを基礎から学ぶ",
+                    Url = "https://codezine.jp/article/corner/927",
+                    Category = "JavaScript",
+                    CreatedAt = new DateTime(2023, 12, 25),
+                    LastUpdatedAt = new DateTime(2023, 12, 26)
+                },
+                new Article
+                {
+                    Id = 4,
+                    Title = "Railsの新機能を知ろう！",
+                    Url = "https://codezine.jp/article/corner/991",
+                    Category = "Rails",
+                    CreatedAt = new DateTime(2023, 12, 27),
+                    LastUpdatedAt = new DateTime(2023, 12, 28)
+                },
+                new Article
+                {
+                    Id = 5,
+                    Title = "Railsによるクライアントサイド開発入門",
+                    Url = "https://codezine.jp/article/corner/919",
+                    Category = "Rails",
+                    CreatedAt = new DateTime(2023, 12, 29),
+                    LastUpdatedAt = new DateTime(2023, 12, 30)
+                },
+                new Article
+                {
+                    Id = 6,
+                    Title = "現場で役立つRust入門",
+                    Url = "https://atmarkit.itmedia.co.jp/ait/series/36943/",
+                    Category = "Rust",
+                    CreatedAt = new DateTime(2023, 12, 31),
+                    LastUpdatedAt = new DateTime(2024, 1, 1)
+                },
+                new Article
+                {
+                    Id = 7,
+                    Title = "基本からしっかり学ぶRust入門",
+                    Url = "https://atmarkit.itmedia.co.jp/ait/series/24844/",
+                    Category = "Rust",
+                    CreatedAt = new DateTime(2024, 1, 2),
+                    LastUpdatedAt = new DateTime(2024, 1, 3)
+                }
+            );
+        });
+
         builder.Entity<Meta>(e =>
             {
                 e.HasData(
