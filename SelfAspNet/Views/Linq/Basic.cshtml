@@ -1,3 +1,8 @@
-@{
-    ViewData["Title"] = "Basic";
-}
+<h1>3000円未満の書籍一覧</h1>
+<hr>
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@item</li>
+    }
+</ul>
