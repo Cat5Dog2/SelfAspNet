@@ -18,4 +18,10 @@ public class LinqController : Controller
         var bs = _db.Books.Where(b => b.Price < 3000).Select(b => b.Title);
         return View(bs);
     }
+
+    public IActionResult Contains()
+    {
+        var bs = _db.Books.Where(b => b.Title.Contains("JavaScript"));
+        return View("Items", bs);
+    }
 }
