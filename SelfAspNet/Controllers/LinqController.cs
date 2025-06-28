@@ -15,7 +15,7 @@ public class LinqController : Controller
 
     public IActionResult Basic()
     {
-        var bs = from b in _db.Books where b.Price < 3000 select b.Title;
+        var bs = _db.Books.Where(b => b.Price < 3000).Select(b => b.Title);
         return View(bs);
     }
 }
