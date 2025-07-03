@@ -34,4 +34,10 @@ public class LinqController : Controller
         var bs = _db.Books.Where(b => b.Title.StartsWith(searchText));
         return View("TitleSearch", bs);
     }
+
+    public IActionResult Selection()
+    {
+        var bs = _db.Books.Where(b => new int[] { 3, 9 }.Contains(b.Published.Month));
+        return View("List", bs);
+    }
 }
