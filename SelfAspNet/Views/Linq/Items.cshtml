@@ -1,6 +1,6 @@
 @model IEnumerable<SelfAspNet.Models.Book>
 
-<h1>タイトルに「JavaScript」を含む書籍一覧</h1>
+<h1>タイトルに「@ViewBag.SearchText」を含む書籍一覧</h1>
 <hr>
 @if(Model?.Any() == true)
 {

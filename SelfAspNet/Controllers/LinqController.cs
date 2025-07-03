@@ -21,7 +21,17 @@ public class LinqController : Controller
 
     public IActionResult Contains()
     {
-        var bs = _db.Books.Where(b => b.Title.Contains("JavaScript"));
+        string searchText = "JavaScript";
+        ViewBag.SearchText = searchText;
+        var bs = _db.Books.Where(b => b.Title.Contains(searchText));
+        return View("Items", bs);
+    }
+
+    public IActionResult StartWith()
+    {
+        string searchText = "独習";
+        ViewBag.SearchText = searchText;
+        var bs = _db.Books.Where(b => b.Title.StartsWith(searchText));
         return View("Items", bs);
     }
 }
