@@ -1,0 +1,15 @@
+@model IEnumerable<SelfAspNet.Models.Book>
+
+@if(Model?.Any() == true)
+{
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>@item.Title（@item.Price 円）</li>
+        }
+    </ul>
+}
+else
+{
+    <p>該当する書籍はありませんでした。</p>
+}

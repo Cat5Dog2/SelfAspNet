@@ -40,4 +40,10 @@ public class LinqController : Controller
         var bs = _db.Books.Where(b => new int[] { 3, 9 }.Contains(b.Published.Month));
         return View("List", bs);
     }
+
+    public IActionResult Between()
+    {
+        var bs = _db.Books.Where(b => 4000 <= b.Price && b.Price <= 4500);
+        return View("Items", bs);
+    }
 }
