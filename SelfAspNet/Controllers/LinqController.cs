@@ -24,7 +24,7 @@ public class LinqController : Controller
         string searchText = "JavaScript";
         ViewBag.SearchText = searchText;
         var bs = _db.Books.Where(b => b.Title.Contains(searchText));
-        return View("Items", bs);
+        return View("TitleSearch", bs);
     }
 
     public IActionResult StartWith()
@@ -32,6 +32,6 @@ public class LinqController : Controller
         string searchText = "独習";
         ViewBag.SearchText = searchText;
         var bs = _db.Books.Where(b => b.Title.StartsWith(searchText));
-        return View("Items", bs);
+        return View("TitleSearch", bs);
     }
 }
