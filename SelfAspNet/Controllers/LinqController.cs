@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -45,5 +46,12 @@ public class LinqController : Controller
     {
         var bs = _db.Books.Where(b => 4000 <= b.Price && b.Price <= 4500);
         return View("Items", bs);
+    }
+
+    public IActionResult Regex()
+    {
+        var reg = new Regex("\\d");
+        var bs = _db.Books.AsEnumerable().Where(b => reg.IsMatch(b.Title)).ToList();
+        return View("List", bs);
     }
 }
