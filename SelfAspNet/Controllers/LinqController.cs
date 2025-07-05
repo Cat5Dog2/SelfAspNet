@@ -54,4 +54,10 @@ public class LinqController : Controller
         var bs = _db.Books.AsEnumerable().Where(b => reg.IsMatch(b.Title)).ToList();
         return View("List", bs);
     }
+
+    public async Task<IActionResult> Single()
+    {
+        var bs = await _db.Books.SingleAsync(b => b.Isbn == "978-4-7981-8094-6");
+        return Content(bs.Title);
+    }
 }
