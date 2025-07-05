@@ -1,0 +1,42 @@
+@model IEnumerable<SelfAspNet.Models.Book>
+
+<form asp-action="Filter" method="GET" class="form-inline">
+    <label for="keyword" class="mr-2">キーワード：</label>
+    <input type="text" id="keyword" name="keyword" class="form-control">
+    <label for="released" class="control-check-label">刊行済み：</label>
+    <input type="checkbox" name="released" id="released" value="true" class="form-check-input">
+    <input type="submit" value="検索" class="btn btn-info">
+</form>
+<hr>
+@if(Model?.Any() == true)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>ISBNコード</th>
+            <th>書名</th>
+            <th>価格</th>
+            <th>出版社</th>
+            <th>刊行日</th>
+            <th>配布サンプル</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(ModelItem => item.Isbn)</td>
+            <td>@Html.DisplayFor(ModelItem => item.Title)</td>
+            <td>@Html.DisplayFor(ModelItem => item.Price)</td>
+            <td>@Html.DisplayFor(ModelItem => item.Publisher)</td>
+            <td>@Html.DisplayFor(ModelItem => item.Published)</td>
+            <td>@Html.DisplayFor(ModelItem => item.Sample)</td>
+        </tr>
+    }
+    </tbody>
+</table>
+}
+else
+{
+    <p>該当する書籍はありませんでした。</p>
+}

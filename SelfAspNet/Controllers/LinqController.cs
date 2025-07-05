@@ -66,4 +66,18 @@ public class LinqController : Controller
         var bs = await _db.Books.AnyAsync(b => b.Price >= 4000);
         return Content(bs.ToString());
     }
+
+    public IActionResult Filter(string keyword, bool? released)
+    {
+        var bs = _db.Books.Select(b => b);
+        if (!string.IsNullOrEmpty(keyword))
+        {
+            bs = bs.Where(b => b.Title.Contains(keyword));
+        }
+        if (released.HasValue && released.Value)
+        {
+            bs = bs.Where(b => b.Published <= DateTime.Now);
+        }
+        return View(bs);
+    }
 }
