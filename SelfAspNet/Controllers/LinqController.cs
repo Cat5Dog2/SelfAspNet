@@ -60,4 +60,10 @@ public class LinqController : Controller
         var bs = await _db.Books.SingleAsync(b => b.Isbn == "978-4-7981-8094-6");
         return Content(bs.Title);
     }
+
+    public async Task<IActionResult> Exists()
+    {
+        var bs = await _db.Books.AnyAsync(b => b.Price >= 4000);
+        return Content(bs.ToString());
+    }
 }
