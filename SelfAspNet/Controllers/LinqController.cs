@@ -80,4 +80,10 @@ public class LinqController : Controller
         }
         return View(bs);
     }
+
+    public IActionResult Order()
+    {
+        var bs = _db.Books.OrderByDescending(b => b.Price).ThenBy(b => b.Published);
+        return View("List", bs);
+    }
 }
