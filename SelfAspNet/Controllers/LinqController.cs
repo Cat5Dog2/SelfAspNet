@@ -115,4 +115,15 @@ public class LinqController : Controller
         };
         return View(bs);
     }
+
+    public IActionResult Select()
+    {
+        var bs = _db.Books.OrderByDescending(b => b.Published)
+            .Select(b => new SummaryBookView(
+                b.Title.Substring(0, 7) + "...",
+                (int)(b.Price * 0.9),
+                b.Published <= DateTime.Now ? "発売中" : "発売予定"
+        ));
+        return View(bs);
+    }
 }
