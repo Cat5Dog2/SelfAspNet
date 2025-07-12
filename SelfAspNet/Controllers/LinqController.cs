@@ -86,4 +86,33 @@ public class LinqController : Controller
         var bs = _db.Books.OrderByDescending(b => b.Price).ThenBy(b => b.Published);
         return View("List", bs);
     }
+
+    public IActionResult SortGrid(string sort)
+    {
+        ViewBag.Isbn = sort == "Isbn" ? "dIsbn" : "Isbn";
+        ViewBag.Title = string.IsNullOrEmpty(sort) ? "dTitle" : "";
+        ViewBag.Price = sort == "Price" ? "dPrice" : "Price";
+        ViewBag.Publisher = sort == "Publisher" ? "dPublisher" : "Publisher";
+        ViewBag.Published = sort == "Published" ? "dPublished" : "Published";
+        ViewBag.Sample = sort == "Sample" ? "dSample" : "Sample";
+
+        var bs = _db.Books.Select(b => b);
+        bs = sort switch
+        {
+            "Isbn" => bs.OrderBy(b => b.Isbn),
+            "Title" => bs.OrderBy(b => b.Title),
+            "Price" => bs.OrderBy(b => b.Price),
+            "Publisher" => bs.OrderBy(b => b.Publisher),
+            "Published" => bs.OrderBy(b => b.Published),
+            "Sample" => bs.OrderBy(b => b.Sample),
+            "dIsbn" => bs.OrderByDescending(b => b.Isbn),
+            "dTitle" => bs.OrderByDescending(b => b.Title),
+            "dPrice" => bs.OrderByDescending(b => b.Price),
+            "dPublisher" => bs.OrderByDescending(b => b.Publisher),
+            "dPublished" => bs.OrderByDescending(b => b.Published),
+            "dSample" => bs.OrderByDescending(b => b.Sample),
+            _ => bs.OrderBy(b => b.Title),
+        };
+        return View(bs);
+    }
 }
