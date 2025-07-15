@@ -126,4 +126,10 @@ public class LinqController : Controller
         ));
         return View(bs);
     }
+
+    public IActionResult Skip()
+    {
+        var bs = _db.Books.OrderBy(b => b.Published).Skip(2).Take(3);
+        return View("List", bs);
+    }
 }
