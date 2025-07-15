@@ -132,4 +132,14 @@ public class LinqController : Controller
         var bs = _db.Books.OrderBy(b => b.Published).Skip(2).Take(3);
         return View("List", bs);
     }
+
+    public IActionResult Page(int id = 1)
+    {
+        var pageSize = 3;
+        var pageNum = id - 1;
+        var bs = _db.Books.OrderBy(b => b.Published)
+            .Skip(pageSize * pageNum)
+            .Take(pageSize);
+        return View("List", bs);
+    }
 }
