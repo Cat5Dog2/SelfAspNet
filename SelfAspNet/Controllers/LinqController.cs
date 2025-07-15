@@ -142,4 +142,10 @@ public class LinqController : Controller
             .Take(pageSize);
         return View("List", bs);
     }
+
+    public async Task<IActionResult> First()
+    {
+        var bs = await _db.Books.OrderBy(b => b.Published).FirstAsync();
+        return View("Details", bs);
+    }
 }
