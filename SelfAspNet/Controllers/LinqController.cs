@@ -148,4 +148,10 @@ public class LinqController : Controller
         var bs = await _db.Books.OrderBy(b => b.Published).FirstAsync();
         return View("Details", bs);
     }
+
+    public IActionResult Group()
+    {
+        var bs = _db.Books.GroupBy(b => b.Publisher);
+        return View(bs);
+    }
 }
