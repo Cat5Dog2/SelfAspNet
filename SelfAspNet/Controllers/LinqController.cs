@@ -154,4 +154,13 @@ public class LinqController : Controller
         var bs = _db.Books.GroupBy(b => b.Publisher);
         return View(bs);
     }
+
+    public IActionResult GroupMini()
+    {
+        var bs = _db.Books.GroupBy(
+            b => b.Publisher,
+            b => new MiniBook(b.Title, b.Price)
+        );
+        return View(bs);
+    }
 }
