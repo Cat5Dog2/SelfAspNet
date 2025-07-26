@@ -185,4 +185,12 @@ public class LinqController : Controller
             .Select(group => new HavingBook(group.Key, (int)group.Average(b => b.Price)));
         return View("Having", bs);
     }
+
+    public IActionResult Join()
+    {
+        var rs = _db.Books
+            .Join(_db.Reviews, b => b.Id, rev => rev.BookId,
+            (b, rev) => new BookReviewView(b.Title, rev.Body));
+        return View(rs);
+    }
 }
