@@ -177,4 +177,12 @@ public class LinqController : Controller
             .Select(group => new HavingBook(group.Key, (int)group.Average(b => b.Price)));
         return View(bs);
     }
+
+    public IActionResult HavingSort()
+    {
+        var bs = _db.Books.GroupBy(b => b.Publisher)
+            .OrderBy(group => group.Average(b => b.Price))
+            .Select(group => new HavingBook(group.Key, (int)group.Average(b => b.Price)));
+        return View("Having", bs);
+    }
 }
