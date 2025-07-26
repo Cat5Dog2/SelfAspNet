@@ -169,4 +169,12 @@ public class LinqController : Controller
         var bs = _db.Books.GroupBy(b => new BookGroup(b.Publisher, b.Published.Year));
         return View(bs);
     }
+
+    public IActionResult Having()
+    {
+        var bs = _db.Books.GroupBy(b => b.Publisher)
+            .Where(group => group.Average(b => b.Price) >= 3000)
+            .Select(group => new HavingBook(group.Key, (int)group.Average(b => b.Price)));
+        return View(bs);
+    }
 }
