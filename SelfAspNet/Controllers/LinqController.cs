@@ -163,4 +163,10 @@ public class LinqController : Controller
         );
         return View(bs);
     }
+
+    public IActionResult GroupMulti()
+    {
+        var bs = _db.Books.GroupBy(b => new BookGroup(b.Publisher, b.Published.Year));
+        return View(bs);
+    }
 }
