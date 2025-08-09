@@ -196,11 +196,10 @@ public class LinqController : Controller
 
     public async Task<IActionResult> Update()
     {
-        foreach (var b in _db.Books.Where(b => b.Publisher == "翔泳社"))
-        {
-            b.Price = (int)(b.Price * 0.8);
-        }
-        await _db.SaveChangesAsync();
+        await _db.Books.Where(b => b.Publisher == "翔泳社")
+            .ExecuteUpdateAsync(setters => setters.SetProperty(
+                b => b.Price, b => (int)(b.Price * 0.8)
+            ));
         return Content("更新しました。");
     }
 }
