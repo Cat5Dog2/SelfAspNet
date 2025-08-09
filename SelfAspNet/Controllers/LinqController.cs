@@ -193,4 +193,14 @@ public class LinqController : Controller
             (b, rev) => new BookReviewView(b.Title, rev.Body));
         return View(rs);
     }
+
+    public async Task<IActionResult> Update()
+    {
+        foreach (var b in _db.Books.Where(b => b.Publisher == "翔泳社"))
+        {
+            b.Price = (int)(b.Price * 0.8);
+        }
+        await _db.SaveChangesAsync();
+        return Content("更新しました。");
+    }
 }
