@@ -223,4 +223,18 @@ public class LinqController : Controller
         await _db.SaveChangesAsync();
         return Content("データを追加しました。");
     }
+
+    public async Task<IActionResult> Insert2()
+    {
+        var book = await _db.Books.FindAsync(1);
+        _db.Reviews.Add(new Review
+        {
+            Name = "木村裕二",
+            Body = "最近は、意外と書き方が変わっていて勉強になった。",
+            LastUpdated = new DateTime(2024, 06, 03),
+            Book = book!
+        });
+        await _db.SaveChangesAsync();
+        return Content("レビューを追加しました。");
+    }
 }
