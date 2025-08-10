@@ -202,4 +202,25 @@ public class LinqController : Controller
             ));
         return Content("更新しました。");
     }
+
+    public async Task<IActionResult> Insert()
+    {
+        _db.Reviews.Add(new Review
+        {
+            Name = "藤井友美",
+            Body = "しっかり勉強したい人向けの本です。最初に、超初心者本を読んで、2冊目にこの本を読むことをおすすめします。",
+            LastUpdated = new DateTime(2024, 05, 17),
+            Book = new Book
+            {
+                Isbn = "978-4-7981-6849-4",
+                Title = "独習PHP",
+                Price = 3740,
+                Publisher = "翔泳社",
+                Published = new DateTime(2021, 06, 14),
+                Sample = true
+            }
+        });
+        await _db.SaveChangesAsync();
+        return Content("データを追加しました。");
+    }
 }
