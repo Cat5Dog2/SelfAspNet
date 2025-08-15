@@ -237,4 +237,14 @@ public class LinqController : Controller
         await _db.SaveChangesAsync();
         return Content("レビューを追加しました。");
     }
+
+    public async Task<IActionResult> Associate()
+    {
+        var book = await _db.Books.FindAsync(1);
+        var review = await _db.Reviews.FindAsync(7);
+
+        review!.Book = book!;
+        await _db.SaveChangesAsync();
+        return Content("データを更新しました。");
+    }
 }
