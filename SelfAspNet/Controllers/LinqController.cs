@@ -247,4 +247,14 @@ public class LinqController : Controller
         await _db.SaveChangesAsync();
         return Content("データを更新しました。");
     }
+
+    public async Task<IActionResult> Delete()
+    {
+        var b = await _db.Books
+            .Include(b => b.Reviews).SingleAsync(b => b.Id == 1);
+
+        _db.Books.Remove(b);
+        await _db.SaveChangesAsync();
+        return Content("データを削除しました。");
+    }
 }
