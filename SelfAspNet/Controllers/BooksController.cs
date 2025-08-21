@@ -113,7 +113,9 @@ namespace SelfAspNet.Controllers
                     }
                     else
                     {
-                        throw;
+                        ModelState.AddModelError(string.Empty, "競合が検出されました。");
+                        return View(book);
+                        // throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
