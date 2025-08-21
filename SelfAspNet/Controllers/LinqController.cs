@@ -257,4 +257,39 @@ public class LinqController : Controller
         await _db.SaveChangesAsync();
         return Content("データを削除しました。");
     }
+
+    public async Task<IActionResult> Transaction2()
+    {
+        using (var tx = _db.Database.BeginTransaction())
+        {
+            try
+            {
+                _db.Books.Add(
+                    new Book
+                    {
+                        Isbn = "978-4-297-13919-3",
+                        Title = "3ステップで学ぶMySQL入門",
+                        Price = 2860,
+                        Publisher = "技術評論社",
+                        Published = new DateTime(2024, 01, 25),
+                        Sample = true
+                    }
+                );
+                await _db.SaveChangesAsync();
+
+                _db.Books.Where(b => b.Publisher == "翔泳社")
+                    .ExecuteUpdate(setters =>
+                        setters.SetProperty(b => b.Price, b => (int)(b.Price * 0.8)));
+
+                tx.Commit();
+                return Content("データベース処理が正常終了しました。");
+            }
+            catch (Exception)
+            {
+                tx.Rollback();
+                return Content("データベース処理に失敗しました。");
+            }
+        }
+
+    }
 }
