@@ -9,10 +9,16 @@ public class User
     public int Id { get; set; }
     [Display(Name = "名前")]
     public string Name { get; set; } = String.Empty;
+
+    [EmailAddress(ErrorMessage = "{0}はメールアドレスの形式で入力してください。")]
     [Display(Name = "メールアドレス")]
     public string? Email { get; set; }
+
+    [NotMapped]
+    [Compare(nameof(Email), ErrorMessage = "{0}が{1}と一致しません。")]
     [Display(Name = "メールアドレス（確認）")]
     public string? EmailConfirmd { get; set; }
+    
     [Display(Name = "誕生日")]
     public DateTime Birth { get; set; } = DateTime.Now;
     [Display(Name = "ニュース希望")]
