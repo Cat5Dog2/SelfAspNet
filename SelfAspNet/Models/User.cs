@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SelfAspNet.Models;
 
+[CustomValidation(typeof(User), nameof(ValidateEmailForNews))]
 public class User
 {
     public int Id { get; set; }
@@ -18,11 +19,24 @@ public class User
     [Compare(nameof(Email), ErrorMessage = "{0}が{1}と一致しません。")]
     [Display(Name = "メールアドレス（確認）")]
     public string? EmailConfirmd { get; set; }
-    
+
     [Display(Name = "誕生日")]
     public DateTime Birth { get; set; } = DateTime.Now;
     [Display(Name = "ニュース希望")]
     public bool NeedNews { get; set; }
 
     public virtual Author? Author { get; set; }
+
+    public static ValidationResult ValidateEmailForNews(User user)
+    {
+        if (user.NeedNews && string.IsNullOrEmpty(user.Email))
+        {
+            return new ValidationResult(
+                "ニュースを受け取るにはメールアドレスは必須です。",
+                new [] { nameof(Email) }
+            );
+        }
+
+        return ValidationResult.Success!;
+    }
 }
