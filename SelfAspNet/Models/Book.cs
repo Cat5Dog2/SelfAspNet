@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SelfAspNet.Models;
 
@@ -10,6 +11,7 @@ public class Book
 
     [RegularExpression("978-4-[0-9]{2,5}-[0-9]{2,5}-[0-9X]",
         ErrorMessage = "{0}の形式が誤っています。")]
+    [Remote("UniqueIsbn", "Books")]
     [Display(Name = "ISBN")]
     [DataType(DataType.ImageUrl)]
     public string Isbn { get; set; } = String.Empty;
