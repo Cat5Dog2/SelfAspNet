@@ -9,31 +9,23 @@ using SelfAspNet.Models;
 
 namespace SelfAspNet.Controllers
 {
-    public class BooksController : Controller
+    public class ReviewsController : Controller
     {
         private readonly MyContext _context;
 
-        public BooksController(MyContext context)
+        public ReviewsController(MyContext context)
         {
             _context = context;
         }
 
-        public async Task<IActionResult> UniqueIsbn(string isbn)
-        {
-            if (await _context.Books.AnyAsync(b => b.Isbn == isbn))
-            {
-                return Json("ISBNコードは既に登録されています。");
-            }
-            return Json(true);
-        }
-
-        // GET: Books
+        // GET: Reviews
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Books.ToListAsync());
+            var myContext = _context.Reviews.Include(r => r.Book);
+            return View(await myContext.ToListAsync());
         }
 
-        // GET: Books/Details/5
+        // GET: Reviews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,39 +33,42 @@ namespace SelfAspNet.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books
+            var review = await _context.Reviews
+                .Include(r => r.Book)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            if (review == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(review);
         }
 
-        // GET: Books/Create
+        // GET: Reviews/Create
         public IActionResult Create()
         {
+            ViewData["BookId"] = new SelectList(_context.Books, "Id", "Isbn");
             return View();
         }
 
-        // POST: Books/Create
+        // POST: Reviews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Isbn,Title,Price,Publisher,Published,Sample")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,Name,Body,LastUpdated,BookId")] Review review)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
+                _context.Add(review);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            ViewData["BookId"] = new SelectList(_context.Books, "Id", "Isbn", review.BookId);
+            return View(review);
         }
 
-        // GET: Books/Edit/5
+        // GET: Reviews/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,28 +76,23 @@ namespace SelfAspNet.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
+            var review = await _context.Reviews.FindAsync(id);
+            if (review == null)
             {
                 return NotFound();
             }
-
-            var list = _context.Books
-                .Select(b => new { Publisher = b.Publisher })
-                .Distinct();
-            ViewBag.Opts = new SelectList(list, "Publisher", "Publisher");
-
-            return View(book);
+            ViewData["BookId"] = new SelectList(_context.Books, "Id", "Isbn", review.BookId);
+            return View(review);
         }
 
-        // POST: Books/Edit/5
+        // POST: Reviews/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Isbn,Title,Price,Publisher,Published,Sample,RowVersion")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Body,LastUpdated,BookId")] Review review)
         {
-            if (id != book.Id)
+            if (id != review.Id)
             {
                 return NotFound();
             }
@@ -111,28 +101,27 @@ namespace SelfAspNet.Controllers
             {
                 try
                 {
-                    _context.Update(book);
+                    _context.Update(review);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.Id))
+                    if (!ReviewExists(review.Id))
                     {
                         return NotFound();
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "競合が検出されました。");
-                        return View(book);
-                        // throw;
+                        throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            ViewData["BookId"] = new SelectList(_context.Books, "Id", "Isbn", review.BookId);
+            return View(review);
         }
 
-        // GET: Books/Delete/5
+        // GET: Reviews/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,34 +129,35 @@ namespace SelfAspNet.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Books
+            var review = await _context.Reviews
+                .Include(r => r.Book)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            if (review == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(review);
         }
 
-        // POST: Books/Delete/5
+        // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book != null)
+            var review = await _context.Reviews.FindAsync(id);
+            if (review != null)
             {
-                _context.Books.Remove(book);
+                _context.Reviews.Remove(review);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookExists(int id)
+        private bool ReviewExists(int id)
         {
-            return _context.Books.Any(e => e.Id == id);
+            return _context.Reviews.Any(e => e.Id == id);
         }
     }
 }
