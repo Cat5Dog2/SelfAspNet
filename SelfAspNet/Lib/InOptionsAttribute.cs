@@ -1,11 +1,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace SelfAspNet.Lib;
 
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-public class InOptionsAttribute : ValidationAttribute
+public class InOptionsAttribute : ValidationAttribute, IClientModelValidator
 {
     private string _options;
 
@@ -30,5 +31,14 @@ public class InOptionsAttribute : ValidationAttribute
             return true;
         }
         return false;
+    }
+
+    public void AddValidation(ClientModelValidationContext context)
+    {
+        var attrs = context.Attributes;
+        attrs.TryAdd("data-val", "true");
+        attrs.TryAdd("data-val-inoptions",
+            FormatErrorMessage(context.ModelMetadata.GetDisplayName()));
+        attrs.TryAdd("data-val-inoptions-opts", _options);
     }
 }
