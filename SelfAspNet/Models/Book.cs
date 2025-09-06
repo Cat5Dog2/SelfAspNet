@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using SelfAspNet.Lib;
 
 namespace SelfAspNet.Models;
 
@@ -26,8 +27,9 @@ public class Book
     [Display(Name = "価格")]
     public int Price { get; set; }
 
-    [RegularExpression("翔泳社|技術評論社|SBクリエイティブ|日経BP|森北出版",
-        ErrorMessage = "{0}は「{1}」のいずれかでなければなりません。")]
+    //[RegularExpression("翔泳社|技術評論社|SBクリエイティブ|日経BP|森北出版",
+    //    ErrorMessage = "{0}は「{1}」のいずれかでなければなりません。")]
+    [InOptions("翔泳社,技術評論社,SBクリエイティブ,日経BP,森北出版")]
     [Display(Name = "出版社")]
     public string Publisher { get; set; } = String.Empty;
 
