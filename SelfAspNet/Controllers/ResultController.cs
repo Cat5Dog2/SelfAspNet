@@ -52,4 +52,9 @@ public class ResultController : Controller
         }
         return View("../Books/Details", bs);
     }
+
+    public IActionResult Nothing()
+    {
+        return Empty;
+    }
 }
