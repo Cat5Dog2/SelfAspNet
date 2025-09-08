@@ -37,4 +37,9 @@ public class ResultController : Controller
     {
         return Redirect("https://wings.msn.to/");
     }
+
+    public IActionResult Local()
+    {
+        return LocalRedirect("/books");
+    }
 }
