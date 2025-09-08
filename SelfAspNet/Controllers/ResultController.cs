@@ -32,4 +32,9 @@ public class ResultController : Controller
         }
         return PartialView("_AjaxResult", bs);
     }
+
+    public IActionResult Move()
+    {
+        return Redirect("https://wings.msn.to/");
+    }
 }
