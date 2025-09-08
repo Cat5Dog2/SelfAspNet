@@ -42,4 +42,14 @@ public class ResultController : Controller
     {
         return LocalRedirect("/books");
     }
+
+    public async Task<IActionResult> Status(int? id)
+    {
+        var bs = await _db.Books.FindAsync(id);
+        if (bs == null)
+        {
+            return NotFound();
+        }
+        return View("../Books/Details", bs);
+    }
 }
