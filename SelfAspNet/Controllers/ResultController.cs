@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SelfAspNet.Models;
@@ -56,5 +57,11 @@ public class ResultController : Controller
     public IActionResult Nothing()
     {
         return Empty;
+    }
+
+    public IActionResult Plain()
+    {
+        return Content("こんにちは、世界！",
+            System.Net.Mime.MediaTypeNames.Text.Plain, Encoding.UTF8);
     }
 }
