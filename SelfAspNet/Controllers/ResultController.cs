@@ -64,4 +64,19 @@ public class ResultController : Controller
         return Content("こんにちは、世界！",
             System.Net.Mime.MediaTypeNames.Text.Plain, Encoding.UTF8);
     }
+
+    public async Task<IActionResult> Csv()
+    {
+        var bs = await _db.Books.ToListAsync();
+        var data = new StringBuilder();
+
+        bs.ForEach(b => data.Append(string.Format(
+            $"{b.Id},{b.Isbn},{b.Title},{b.Price},{b.Publisher},{b.Published}\r\n"
+        )));
+
+        Response.Headers.Append("Content-Disposition", "attachment;filename=data.csv");
+
+        return Content(data.ToString(), "text/comma-separated-values",
+            Encoding.GetEncoding("Shift_JIS"));
+    }
 }
