@@ -1,17 +1,22 @@
 using System;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
+using NuGet.Common;
 using SelfAspNet.Models;
 
 namespace SelfAspNet.Controllers;
 
 public class ResultController : Controller
 {
-    public readonly MyContext _db;
-    public ResultController(MyContext db)
+    private readonly MyContext _db;
+    private readonly IWebHostEnvironment _host;
+    public ResultController(MyContext db, IWebHostEnvironment host)
     {
         _db = db;
+        _host = host;
     }
 
     public IActionResult AjaxForm()
@@ -83,6 +88,23 @@ public class ResultController : Controller
     public IActionResult Image(int id)
     {
         var path = $"/images/img_{id}.png";
-        return File(path, "image/png", "sample.png");
+        var fullpath = _host.WebRootPath + path;
+        return File(path, "image/png",
+            new DateTimeOffset(System.IO.File.GetLastWriteTime(fullpath)),
+            new EntityTagHeaderValue(ComputeSha256(fullpath))
+        );
+    }
+
+    private static string ComputeSha256(string path)
+    {
+        using var sha = SHA512.Create();
+        using var stream = new FileStream(path, FileMode.Open);
+        var bs = sha.ComputeHash(stream);
+        var result = new StringBuilder();
+        foreach (var b in bs)
+        {
+            result.Append(b.ToString("x2"));
+        }
+        return $"\"{result.ToString()}\"";
     }
 }
