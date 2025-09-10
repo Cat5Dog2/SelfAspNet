@@ -79,4 +79,10 @@ public class ResultController : Controller
         return Content(data.ToString(), "text/comma-separated-values",
             Encoding.GetEncoding("Shift_JIS"));
     }
+
+    public IActionResult Image(int id)
+    {
+        var path = $"/images/img_{id}.png";
+        return File(path, "image/png", "sample.png");
+    }
 }
