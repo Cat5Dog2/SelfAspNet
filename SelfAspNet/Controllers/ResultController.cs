@@ -1,10 +1,16 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using NuGet.Common;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Kernel.Font;
+using iText.Kernel.Colors;
+using iText.Kernel.Pdf;
 using SelfAspNet.Models;
 
 namespace SelfAspNet.Controllers;
