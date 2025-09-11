@@ -123,4 +123,25 @@ public class ResultController : Controller
         }
         return File(p.Content, p.ContentType, p.Name);
     }
+
+    public IActionResult Pdf()
+    {
+        var stream = new MemoryStream();
+        var doc = new iText.Layout.Document(
+            new PdfDocument(
+                new PdfWriter(stream)
+            )
+        );
+
+        var font = PdfFontFactory.CreateFont("HeiseiKakuGo-W5", "UniJIS-UCS2-H");
+        doc.SetFont(font);
+
+        doc.Add(
+            new Paragraph("こんにちは、").Add(new Text("世界！"))
+                .SetFontSize(20).SetFontColor(new DeviceRgb(255, 0, 0))
+        );
+
+        doc.Close();
+        return File(stream.ToArray(), MediaTypeNames.Application.Pdf);
+    }
 }
