@@ -12,6 +12,7 @@ using iText.Kernel.Font;
 using iText.Kernel.Colors;
 using iText.Kernel.Pdf;
 using SelfAspNet.Models;
+using SelfAspNet.Lib;
 
 namespace SelfAspNet.Controllers;
 
@@ -143,5 +144,10 @@ public class ResultController : Controller
 
         doc.Close();
         return File(stream.ToArray(), MediaTypeNames.Application.Pdf);
+    }
+
+    public async Task<IActionResult> Output()
+    {
+        return new CsvResult(await _db.Books.ToListAsync());
     }
 }
