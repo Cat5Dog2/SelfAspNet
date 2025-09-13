@@ -48,4 +48,51 @@ public class BinderController : Controller
             return View();
         }
     }
+
+    public IActionResult Upload()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Upload(List<IFormFile>? upFiles)
+    {
+        if (upFiles == null || upFiles.Count == 0)
+        {
+            ModelState.AddModelError(string.Empty, "ファイルが指定されていません。");
+            return View();
+        }
+
+        var root = _host.WebRootPath ?? _host.ContentRootPath;
+        var saveDir = Path.Combine(root, "Data");
+        Directory.CreateDirectory(saveDir);
+
+        var success = 0;
+        foreach (var file in upFiles)
+        {
+            var safeName = Path.GetFileName(file.FileName);
+            var savePath = Path.Combine(saveDir, safeName);
+
+            var ext = new[] { ".jpg", ".jpeg", "png" };
+            if (!ext.Contains(Path.GetExtension(safeName)))
+            {
+                ModelState.AddModelError(string.Empty, $"拡張子は.png、.jpgでなければなりません（{safeName}）");
+                continue;
+            }
+            if (file.Length > 1024 * 1024)
+            {
+                ModelState.AddModelError(string.Empty, $"ファイルサイズは1MB以内でなければなりません（{safeName}）");
+                continue;
+            }
+
+            await using var stream = System.IO.File.Create(savePath);
+            await file.CopyToAsync(stream);
+
+            success++;
+        }
+
+        ViewBag.Message = $"{success}個のファイルをアップロードしました。";
+        return View();
+    }
 }
