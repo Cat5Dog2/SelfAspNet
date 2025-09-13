@@ -1,0 +1,25 @@
+@model SelfAspNet.Models.Book
+
+<form asp-action="CreateMulti">
+    <div asp-validation-summary="All" class="text-denger"></div>
+    <input type="submit" value="Create" class="btn btn-primary">
+    <table class="table">
+        <tr>
+            <th>ISBNコード</th>
+            <th>書名</th>
+            <th>価格</th>
+            <th>出版社</th>
+            <th>刊行日</th>
+        </tr>
+        @for (int i = 0; i < 5; i++)
+        {
+        <tr>
+            <td>@Html.TextBox(expression: $"list[{i}].Isbn", value: "", new { @class = "form-control" })</td>
+            <td>@Html.TextBox(expression: $"list[{i}].Title", value: "", new { @class = "form-control" })</td>
+            <td>@Html.TextBox(expression: $"list[{i}].Price", value: "", new { @class = "form-control" })</td>
+            <td>@Html.TextBox(expression: $"list[{i}].Publisher", value: "", new { @class = "form-control" })</td>
+            <td>@Html.TextBox(expression: $"list[{i}].Published", value: "", new { @class = "form-control" })</td>
+        </tr>
+        }
+    </table>
+</form>
