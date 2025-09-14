@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SelfAspNet.Helpers;
 using SelfAspNet.Models;
 using SelfAspNet.CompiledModels;
+using SelfAspNet.Lib;
 using Microsoft.CodeAnalysis.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<ITagHelperComponent, MetaTagHelperComponent>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ValueProviderFactories.Add(new HttpCookieValueProviderFactory());
+});
 builder.Services.AddDbContext<MyContext>(options =>
     options
         .UseLazyLoadingProxies()
