@@ -69,6 +69,7 @@ public class BinderController : Controller
         Directory.CreateDirectory(saveDir);
 
         var success = 0;
+        var ps = _db.Photos;
         foreach (var file in upFiles)
         {
             var safeName = Path.GetFileName(file.FileName);
@@ -86,8 +87,17 @@ public class BinderController : Controller
                 continue;
             }
 
-            await using var stream = System.IO.File.Create(savePath);
+            using var stream = System.IO.File.Create(savePath);
             await file.CopyToAsync(stream);
+
+            using var memory = new MemoryStream();
+            await file.CopyToAsync(memory);
+            ps.Add(new Photo
+            {
+                Name = safeName,
+                ContentType = file.ContentType,
+                Content = memory.ToArray()
+            });
 
             success++;
         }
