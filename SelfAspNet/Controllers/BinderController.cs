@@ -105,4 +105,15 @@ public class BinderController : Controller
         ViewBag.Message = $"{success}個のファイルをアップロードしました。";
         return View();
     }
+
+    public IActionResult Custom()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Custom([ModelBinder(typeof(DateModelBinder))] DateTime current)
+    {
+        return Content($"入力値：{current.ToShortDateString()}");
+    }
 }
