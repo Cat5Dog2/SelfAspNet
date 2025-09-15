@@ -16,6 +16,7 @@ builder.Services.AddTransient<ITagHelperComponent, MetaTagHelperComponent>();
 builder.Services.AddControllersWithViews(options =>
 {
     options.ValueProviderFactories.Add(new HttpCookieValueProviderFactory());
+    options.ModelBinderProviders.Insert(0, new DateModelBinderProvider());
 });
 builder.Services.AddDbContext<MyContext>(options =>
     options
