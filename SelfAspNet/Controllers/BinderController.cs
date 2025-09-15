@@ -112,7 +112,7 @@ public class BinderController : Controller
     }
 
     [HttpPost]
-    public IActionResult Custom(/*[ModelBinder(typeof(DateModelBinder))]*/ DateTime current)
+    public IActionResult Custom([ModelBinder(typeof(DateModelBinder))] DateTime current)
     {
         return Content($"入力値：{current.ToShortDateString()}");
     }
