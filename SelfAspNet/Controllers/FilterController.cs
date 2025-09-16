@@ -5,6 +5,7 @@ using SelfAspNet.Filters;
 namespace SelfAspNet.Controllers;
 
 [MyLog]
+[MyControllerFilter(Order = int.MinValue)]
 public class FilterController : Controller
 {
     [MyLogAsync]

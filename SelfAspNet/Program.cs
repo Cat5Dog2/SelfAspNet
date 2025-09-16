@@ -18,6 +18,7 @@ builder.Services.AddControllersWithViews(options =>
     options.ValueProviderFactories.Add(new HttpCookieValueProviderFactory());
     //options.ModelBinderProviders.Insert(0, new DateModelBinderProvider());
     options.Filters.Add<MyLogAttribute>();
+    options.Filters.Add<MyAppFilterAttribute>(int.MaxValue);
 });
 builder.Services.AddDbContext<MyContext>(options =>
     options
