@@ -7,6 +7,7 @@ namespace SelfAspNet.Controllers;
 [MyLog]
 public class FilterController : Controller
 {
+    [MyLogAsync]
     public IActionResult Index()
     {
         Console.WriteLine($"【Action】本体です。");
