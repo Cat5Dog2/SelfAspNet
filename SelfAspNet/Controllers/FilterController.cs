@@ -4,9 +4,9 @@ using SelfAspNet.Filters;
 
 namespace SelfAspNet.Controllers;
 
+[MyLog]
 public class FilterController : Controller
 {
-    [MyLog]
     public IActionResult Index()
     {
         Console.WriteLine($"【Action】本体です。");
