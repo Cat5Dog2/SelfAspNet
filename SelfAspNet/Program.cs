@@ -6,7 +6,7 @@ using SelfAspNet.Helpers;
 using SelfAspNet.Models;
 using SelfAspNet.CompiledModels;
 using SelfAspNet.Lib;
-using Microsoft.CodeAnalysis.Options;
+using SelfAspNet.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +17,7 @@ builder.Services.AddControllersWithViews(options =>
 {
     options.ValueProviderFactories.Add(new HttpCookieValueProviderFactory());
     //options.ModelBinderProviders.Insert(0, new DateModelBinderProvider());
+    options.Filters.Add<MyLogAttribute>();
 });
 builder.Services.AddDbContext<MyContext>(options =>
     options
