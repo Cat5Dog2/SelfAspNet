@@ -15,4 +15,10 @@ public class FilterController : Controller
         ViewBag.Message = "こんにちは、世界！";
         return View();
     }
+
+    [TimeLimit("2024/05/01", "2024/07/15")]
+    public IActionResult Range()
+    {
+        return Content("キャンペーン期間中です");
+    }
 }
