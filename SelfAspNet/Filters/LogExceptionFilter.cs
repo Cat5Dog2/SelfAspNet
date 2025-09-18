@@ -1,4 +1,5 @@
 using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SelfAspNet.Models;
 
@@ -22,5 +23,11 @@ public class LogExceptionFilter : IAsyncExceptionFilter
             Accessed = DateTime.Now
         });
         await _db.SaveChangesAsync();
+
+        context.ExceptionHandled = true;
+        context.Result = new ViewResult
+        {
+            ViewName = "MyError"
+        };
     }
 }
