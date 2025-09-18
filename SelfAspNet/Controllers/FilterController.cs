@@ -22,7 +22,7 @@ public class FilterController : Controller
         return Content("キャンペーン期間中です");
     }
 
-    [ServiceFilter(typeof(LogExceptionFilter))]
+    [LogException]
     public IActionResult Except()
     {
         throw new Exception("問題が発生しました！");
