@@ -21,4 +21,10 @@ public class FilterController : Controller
     {
         return Content("キャンペーン期間中です");
     }
+
+    [TypeFilter(typeof(LogExceptionFilter))]
+    public IActionResult Except()
+    {
+        throw new Exception("問題が発生しました！");
+    }
 }
