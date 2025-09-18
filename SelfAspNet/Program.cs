@@ -20,6 +20,9 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add<MyLogAttribute>();
     options.Filters.Add<MyAppFilterAttribute>(int.MaxValue);
 });
+
+builder.Services.AddScoped<LogExceptionFilter>();
+
 builder.Services.AddDbContext<MyContext>(options =>
     options
         .UseLazyLoadingProxies()
