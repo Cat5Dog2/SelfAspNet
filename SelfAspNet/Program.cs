@@ -7,6 +7,7 @@ using SelfAspNet.Models;
 using SelfAspNet.CompiledModels;
 using SelfAspNet.Lib;
 using SelfAspNet.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddControllersWithViews(options =>
     //options.ModelBinderProviders.Insert(0, new DateModelBinderProvider());
     options.Filters.Add<MyLogAttribute>();
     options.Filters.Add<MyAppFilterAttribute>(int.MaxValue);
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 });
 
 builder.Services.AddScoped<LogExceptionFilter>();
