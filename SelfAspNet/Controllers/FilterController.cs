@@ -27,4 +27,16 @@ public class FilterController : Controller
     {
         throw new Exception("問題が発生しました！");
     }
+
+    public IActionResult Csrf()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Process()
+    {
+        return Content("処理終了");
+    }
 }
