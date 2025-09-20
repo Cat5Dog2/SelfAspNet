@@ -34,6 +34,7 @@ namespace SelfAspNet.Controllers
         }
 
         // GET: Books/Details/5
+        [ResponseCache(Duration = 60, VaryByQueryKeys = new [] { "mode" })]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

@@ -1,16 +1,33 @@
 using System;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using SelfAspNet.Helpers;
 using SelfAspNet.Models;
 using SelfAspNet.CompiledModels;
+using SelfAspNet.Lib;
+using SelfAspNet.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddResponseCaching();
 
 builder.Services.AddTransient<ITagHelperComponent, MetaTagHelperComponent>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ValueProviderFactories.Add(new HttpCookieValueProviderFactory());
+    //options.ModelBinderProviders.Insert(0, new DateModelBinderProvider());
+    options.Filters.Add<MyLogAttribute>();
+    options.Filters.Add<MyAppFilterAttribute>(int.MaxValue);
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    options.CacheProfiles.Add("MyCache", new CacheProfile { Duration = 300 });
+});
+
+builder.Services.AddScoped<LogExceptionFilter>();
+
 builder.Services.AddDbContext<MyContext>(options =>
     options
         .UseLazyLoadingProxies()
@@ -19,6 +36,11 @@ builder.Services.AddDbContext<MyContext>(options =>
             builder.Configuration.GetConnectionString("MyContext")
         )
 );
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
 
 var app = builder.Build();
 
@@ -42,6 +64,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseResponseCaching();
 
 app.MapControllerRoute(
     name: "default",
