@@ -26,6 +26,7 @@ namespace SelfAspNet.Controllers
         }
 
         // GET: Reviews/Details/5
+        [ResponseCache(CacheProfileName = "MyCache")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

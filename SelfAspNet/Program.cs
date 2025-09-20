@@ -23,6 +23,7 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add<MyLogAttribute>();
     options.Filters.Add<MyAppFilterAttribute>(int.MaxValue);
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    options.CacheProfiles.Add("MyCache", new CacheProfile { Duration = 300 });
 });
 
 builder.Services.AddScoped<LogExceptionFilter>();
