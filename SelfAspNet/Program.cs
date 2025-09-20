@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddResponseCaching();
+
 builder.Services.AddTransient<ITagHelperComponent, MetaTagHelperComponent>();
 
 // Add services to the container.
@@ -61,6 +63,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseResponseCaching();
 
 app.MapControllerRoute(
     name: "default",
