@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfAspNet", "SelfAspNet\SelfAspNet.csproj", "{A0DA7923-FE5B-43A1-B6C4-84329140D467}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreIdentity", "CoreIdentity\CoreIdentity.csproj", "{F5C6BABC-165D-4D89-8841-B807EDFC85D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{A0DA7923-FE5B-43A1-B6C4-84329140D467}.Release|x64.Build.0 = Release|Any CPU
 		{A0DA7923-FE5B-43A1-B6C4-84329140D467}.Release|x86.ActiveCfg = Release|Any CPU
 		{A0DA7923-FE5B-43A1-B6C4-84329140D467}.Release|x86.Build.0 = Release|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Debug|x64.Build.0 = Debug|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Debug|x86.Build.0 = Debug|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Release|x64.ActiveCfg = Release|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Release|x64.Build.0 = Release|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Release|x86.ActiveCfg = Release|Any CPU
+		{F5C6BABC-165D-4D89-8841-B807EDFC85D4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
