@@ -18,9 +18,9 @@ namespace SelfAspNet.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> UniqueIsbn(string isbn)
+        public async Task<IActionResult> UniqueIsbn(string isbn, int id)
         {
-            if (await _context.Books.AnyAsync(b => b.Isbn == isbn))
+            if (await _context.Books.AnyAsync(b => b.Isbn == isbn && b.Id != id))
             {
                 return Json("ISBNコードは既に登録されています。");
             }
