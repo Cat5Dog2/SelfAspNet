@@ -18,9 +18,9 @@ namespace SelfAspNet.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> UniqueIsbn(string isbn)
+        public async Task<IActionResult> UniqueIsbn(string isbn, int id)
         {
-            if (await _context.Books.AnyAsync(b => b.Isbn == isbn))
+            if (await _context.Books.AnyAsync(b => b.Isbn == isbn && b.Id != id))
             {
                 return Json("ISBNコードは既に登録されています。");
             }
@@ -99,7 +99,7 @@ namespace SelfAspNet.Controllers
         // POST: Books/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Isbn,Title,Price,Publisher,Published,Sample,RowVersion")] Book book)
         {

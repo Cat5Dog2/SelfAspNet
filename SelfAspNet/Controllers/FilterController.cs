@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using SelfAspNet.Filters;
+using SelfAspNet.Lib;
 
 namespace SelfAspNet.Controllers;
 
@@ -38,5 +39,11 @@ public class FilterController : Controller
     public IActionResult Process()
     {
         return Content("処理終了");
+    }
+
+    [RefererSelector(false)]
+    public IActionResult Referer()
+    {
+        return Content("正しくアクセス出来ました。");
     }
 }

@@ -58,6 +58,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseHttpMethodOverride(new HttpMethodOverrideOptions
+{
+    FormFieldName = "_method"
+});
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
