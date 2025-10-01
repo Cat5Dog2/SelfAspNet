@@ -39,6 +39,10 @@ builder.Services.AddDbContext<MyContext>(options =>
 
 builder.Services.AddBookRepository();
 
+builder.Services.AddSingleton<IMyService1, MyService>();
+builder.Services.AddScoped<IMyService2, MyService>();
+builder.Services.AddTransient<IMyService3, MyService>();
+
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
     options.AllowSynchronousIO = true;
