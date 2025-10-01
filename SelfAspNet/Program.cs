@@ -43,6 +43,9 @@ builder.Services.AddSingleton<IMyService1, MyService>();
 builder.Services.AddScoped<IMyService2, MyService>();
 builder.Services.AddTransient<IMyService3, MyService>();
 
+builder.Services.AddSingleton<IMessageService, MorningMessageService>();
+builder.Services.AddSingleton<IMessageService, NightMessageService>();
+
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
     options.AllowSynchronousIO = true;
