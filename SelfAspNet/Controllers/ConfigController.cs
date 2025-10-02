@@ -13,8 +13,8 @@ public class ConfigController : Controller
 
     public IActionResult Basic()
     {
-        ViewBag.Published = _config["MyAppOptions:Published"];
-        ViewBag.Project = _config["MyAppOptions:Projects:0"];
+        ViewBag.Published = _config.GetValue<DateTime>("MyAppOptions:Published");
+        ViewBag.Project = _config.GetValue<string>("MyAppOptions:Projects:0");
         return View();
     }
 }
