@@ -50,6 +50,16 @@ builder.Services.AddOptions<MyAppOptions>()
     .Bind(builder.Configuration.GetSection(nameof(MyAppOptions)))
     .ValidateDataAnnotations();
 
+builder.Services.AddOptions<ApiInfoOptions>(ApiInfoOptions.SlideShow)
+    .Bind(builder.Configuration.GetSection(
+        $"{nameof(ApiInfoOptions)}:{ApiInfoOptions.SlideShow}"
+    ));
+
+builder.Services.AddOptions<ApiInfoOptions>(ApiInfoOptions.OpenWeather)
+    .Bind(builder.Configuration.GetSection(
+        $"{nameof(ApiInfoOptions)}:{ApiInfoOptions.OpenWeather}"
+    ));
+
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
     options.AllowSynchronousIO = true;
