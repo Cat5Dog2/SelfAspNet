@@ -22,4 +22,10 @@ public class LogController : Controller
 
         return Content("ログはコンソールなどから確認してください");
     }
+
+    public IActionResult Message()
+    {
+        _logger.LogWarning("{Path} -> {Current: yyyy年MM月dd日}", Request.Path, DateTime.Now);
+        return Content("ログはコンソールなどから確認してください");
+    }
 }
