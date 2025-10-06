@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using SelfAspNet.Lib;
 
 namespace SelfAspNet.Controllers;
 
@@ -26,6 +27,12 @@ public class LogController : Controller
     public IActionResult Message()
     {
         _logger.LogWarning("{Path} -> {Current: yyyy年MM月dd日}", Request.Path, DateTime.Now);
+        return Content("ログはコンソールなどから確認してください");
+    }
+
+    public IActionResult Event()
+    {
+        _logger.LogWarning(MyAppEvents.CreateData, "致命的な問題");
         return Content("ログはコンソールなどから確認してください");
     }
 }
