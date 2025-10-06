@@ -24,6 +24,24 @@ public class LogController : Controller
         return Content("ログはコンソールなどから確認してください");
     }
 
+    public IActionResult Scope()
+    {
+        using (_logger.BeginScope("トップ"))
+        {
+            _logger.LogWarning("処理を開始しました。");
+
+            for (int i = 0; i < 3; i++)
+            {
+                using (_logger.BeginScope("Loop {Index}", i))
+                {
+                    _logger.LogWarning("ナノ秒：{current}", DateTime.Now.Nanosecond);
+                }
+            }
+        }
+
+        return Content("ログはコンソールなどから確認してください");
+    }
+
     public IActionResult Message()
     {
         _logger.LogWarning("{Path} -> {Current: yyyy年MM月dd日}", Request.Path, DateTime.Now);
