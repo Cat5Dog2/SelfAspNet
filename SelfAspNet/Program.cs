@@ -8,6 +8,7 @@ using SelfAspNet.CompiledModels;
 using SelfAspNet.Lib;
 using SelfAspNet.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Console;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +60,14 @@ builder.Services.AddOptions<ApiInfoOptions>(ApiInfoOptions.OpenWeather)
     .Bind(builder.Configuration.GetSection(
         $"{nameof(ApiInfoOptions)}:{ApiInfoOptions.OpenWeather}"
     ));
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSimpleConsole(option =>
+{
+    option.IncludeScopes = true;
+    option.TimestampFormat = "F";
+    option.ColorBehavior = LoggerColorBehavior.Enabled;
+});
 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
