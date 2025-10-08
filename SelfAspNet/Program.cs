@@ -8,6 +8,7 @@ using SelfAspNet.CompiledModels;
 using SelfAspNet.Lib;
 using SelfAspNet.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Console;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,38 @@ builder.Services.AddDbContext<MyContext>(options =>
             builder.Configuration.GetConnectionString("MyContext")
         )
 );
+
+builder.Services.AddBookRepository();
+
+builder.Services.AddSingleton<IMyService1, MyService>();
+builder.Services.AddScoped<IMyService2, MyService>();
+builder.Services.AddTransient<IMyService3, MyService>();
+
+builder.Services.AddSingleton<IMessageService, MorningMessageService>();
+builder.Services.AddSingleton<IMessageService, NightMessageService>();
+
+builder.Services.AddOptions<MyAppOptions>()
+    .Bind(builder.Configuration.GetSection(nameof(MyAppOptions)))
+    .ValidateDataAnnotations();
+
+builder.Services.AddOptions<ApiInfoOptions>(ApiInfoOptions.SlideShow)
+    .Bind(builder.Configuration.GetSection(
+        $"{nameof(ApiInfoOptions)}:{ApiInfoOptions.SlideShow}"
+    ));
+
+builder.Services.AddOptions<ApiInfoOptions>(ApiInfoOptions.OpenWeather)
+    .Bind(builder.Configuration.GetSection(
+        $"{nameof(ApiInfoOptions)}:{ApiInfoOptions.OpenWeather}"
+    ));
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSimpleConsole(option =>
+{
+    option.IncludeScopes = true;
+    option.TimestampFormat = "F";
+    option.ColorBehavior = LoggerColorBehavior.Enabled;
+});
+builder.Logging.AddFile(Path.Combine(builder.Environment.ContentRootPath, "Logs"));
 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {

@@ -12,10 +12,12 @@ namespace SelfAspNet.Controllers
     public class BooksController : Controller
     {
         private readonly MyContext _context;
+        private readonly IBookRepository _rep;
 
-        public BooksController(MyContext context)
+        public BooksController(MyContext context, IBookRepository rep)
         {
             _context = context;
+            _rep = rep;
         }
 
         public async Task<IActionResult> UniqueIsbn(string isbn, int id)
@@ -30,7 +32,7 @@ namespace SelfAspNet.Controllers
         // GET: Books
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Books.ToListAsync());
+            return View(await _rep.GetAllAsync());
         }
 
         // GET: Books/Details/5
@@ -67,8 +69,7 @@ namespace SelfAspNet.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
+                await _rep.CreateAsync(book);
                 return RedirectToAction(nameof(Index));
             }
             return View(book);
