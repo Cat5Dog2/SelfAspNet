@@ -68,6 +68,7 @@ builder.Logging.AddSimpleConsole(option =>
     option.TimestampFormat = "F";
     option.ColorBehavior = LoggerColorBehavior.Enabled;
 });
+builder.Logging.AddFile(Path.Combine(builder.Environment.ContentRootPath, "Logs"));
 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
