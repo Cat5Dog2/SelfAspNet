@@ -104,6 +104,16 @@ app.UseAuthorization();
 app.UseResponseCaching();
 
 app.MapControllerRoute(
+    name: "article",
+    pattern: "article/{aid}",
+    defaults: new
+    {
+        controller = "Route",
+        action = "Param"
+    }
+);
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
