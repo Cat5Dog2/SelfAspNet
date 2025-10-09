@@ -75,6 +75,11 @@ builder.Services.Configure<KestrelServerOptions>(options =>
     options.AllowSynchronousIO = true;
 });
 
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.ConstraintMap.Add("isbn", typeof(IsbnRouteConstraint));
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -110,6 +115,16 @@ app.MapControllerRoute(
     {
         controller = "Route",
         action = "Param"
+    }
+);
+
+app.MapControllerRoute(
+    name: "content",
+    pattern: "content/{code:isbn}",
+    defaults: new
+    {
+        controller = "Route",
+        action = "Constraint"
     }
 );
 

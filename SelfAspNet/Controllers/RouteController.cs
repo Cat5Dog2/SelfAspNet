@@ -10,4 +10,8 @@ public class RouteController : Controller
         return Content($"記事番号：{aid}");
     }
     
+    public IActionResult Constraint(string code)
+    {
+        return Content($"書籍：{code}");
+    }
 }
