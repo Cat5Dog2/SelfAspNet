@@ -105,7 +105,7 @@ app.UseResponseCaching();
 
 app.MapControllerRoute(
     name: "article",
-    pattern: "article/{aid}",
+    pattern: "article/{aid:int}",
     defaults: new
     {
         controller = "Route",
