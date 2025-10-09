@@ -105,7 +105,7 @@ app.UseResponseCaching();
 
 app.MapControllerRoute(
     name: "article",
-    pattern: "article/{aid:int}",
+    pattern: @"article/{aid:regex(^\d{{1,3}}$)}",
     defaults: new
     {
         controller = "Route",
