@@ -129,6 +129,20 @@ app.MapControllerRoute(
 );
 
 app.MapControllerRoute(
+    name: "limit",
+    pattern: "campaign",
+    defaults: new
+    {
+        controller = "Route",
+        action = "Limit",
+        limit = true
+    },
+    constraints: new {
+        limit = new TimeLimitRouteConstraint("2025-10-01", "2025-10-10")
+    }
+);
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
