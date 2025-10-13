@@ -137,9 +137,15 @@ app.MapControllerRoute(
         action = "Limit",
         limit = true
     },
-    constraints: new {
+    constraints: new
+    {
         limit = new TimeLimitRouteConstraint("2025-10-01", "2025-10-10")
     }
+);
+
+app.MapControllerRoute(
+    name: "area-default",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 );
 
 app.MapControllerRoute(
