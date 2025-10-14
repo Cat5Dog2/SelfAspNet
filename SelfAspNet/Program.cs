@@ -108,6 +108,13 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseResponseCaching();
 
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    CheckConsentNeeded = _ => true,
+    MinimumSameSitePolicy = SameSiteMode.Lax,
+    Secure = CookieSecurePolicy.Always
+});
+
 // app.MapControllerRoute(
 //     name: "article",
 //     pattern: @"article/{aid:regex(^\d{{1,3}}$)}",
