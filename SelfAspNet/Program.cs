@@ -14,17 +14,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddResponseCaching();
 
-builder.Services.AddTransient<ITagHelperComponent, MetaTagHelperComponent>();
+//builder.Services.AddTransient<ITagHelperComponent, MetaTagHelperComponent>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews(options =>
 {
     options.ValueProviderFactories.Add(new HttpCookieValueProviderFactory());
     //options.ModelBinderProviders.Insert(0, new DateModelBinderProvider());
-    options.Filters.Add<MyLogAttribute>();
-    options.Filters.Add<MyAppFilterAttribute>(int.MaxValue);
-    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-    options.CacheProfiles.Add("MyCache", new CacheProfile { Duration = 300 });
+    // options.Filters.Add<MyLogAttribute>();
+    // options.Filters.Add<MyAppFilterAttribute>(int.MaxValue);
+    // options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    // options.CacheProfiles.Add("MyCache", new CacheProfile { Duration = 300 });
 });
 
 builder.Services.AddScoped<LogExceptionFilter>();
@@ -40,12 +40,12 @@ builder.Services.AddDbContext<MyContext>(options =>
 
 builder.Services.AddBookRepository();
 
-builder.Services.AddSingleton<IMyService1, MyService>();
-builder.Services.AddScoped<IMyService2, MyService>();
-builder.Services.AddTransient<IMyService3, MyService>();
+// builder.Services.AddSingleton<IMyService1, MyService>();
+// builder.Services.AddScoped<IMyService2, MyService>();
+// builder.Services.AddTransient<IMyService3, MyService>();
 
-builder.Services.AddSingleton<IMessageService, MorningMessageService>();
-builder.Services.AddSingleton<IMessageService, NightMessageService>();
+// builder.Services.AddSingleton<IMessageService, MorningMessageService>();
+// builder.Services.AddSingleton<IMessageService, NightMessageService>();
 
 builder.Services.AddOptions<MyAppOptions>()
     .Bind(builder.Configuration.GetSection(nameof(MyAppOptions)))
@@ -61,14 +61,14 @@ builder.Services.AddOptions<ApiInfoOptions>(ApiInfoOptions.OpenWeather)
         $"{nameof(ApiInfoOptions)}:{ApiInfoOptions.OpenWeather}"
     ));
 
-builder.Logging.ClearProviders();
-builder.Logging.AddSimpleConsole(option =>
-{
-    option.IncludeScopes = true;
-    option.TimestampFormat = "F";
-    option.ColorBehavior = LoggerColorBehavior.Enabled;
-});
-builder.Logging.AddFile(Path.Combine(builder.Environment.ContentRootPath, "Logs"));
+// builder.Logging.ClearProviders();
+// builder.Logging.AddSimpleConsole(option =>
+// {
+//     option.IncludeScopes = true;
+//     option.TimestampFormat = "F";
+//     option.ColorBehavior = LoggerColorBehavior.Enabled;
+// });
+// builder.Logging.AddFile(Path.Combine(builder.Environment.ContentRootPath, "Logs"));
 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
@@ -108,45 +108,45 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseResponseCaching();
 
-app.MapControllerRoute(
-    name: "article",
-    pattern: @"article/{aid:regex(^\d{{1,3}}$)}",
-    defaults: new
-    {
-        controller = "Route",
-        action = "Param"
-    }
-);
+// app.MapControllerRoute(
+//     name: "article",
+//     pattern: @"article/{aid:regex(^\d{{1,3}}$)}",
+//     defaults: new
+//     {
+//         controller = "Route",
+//         action = "Param"
+//     }
+// );
 
-app.MapControllerRoute(
-    name: "content",
-    pattern: "content/{code:isbn}",
-    defaults: new
-    {
-        controller = "Route",
-        action = "Constraint"
-    }
-);
+// app.MapControllerRoute(
+//     name: "content",
+//     pattern: "content/{code:isbn}",
+//     defaults: new
+//     {
+//         controller = "Route",
+//         action = "Constraint"
+//     }
+// );
 
-app.MapControllerRoute(
-    name: "limit",
-    pattern: "campaign",
-    defaults: new
-    {
-        controller = "Route",
-        action = "Limit",
-        limit = true
-    },
-    constraints: new
-    {
-        limit = new TimeLimitRouteConstraint("2025-10-01", "2025-10-10")
-    }
-);
+// app.MapControllerRoute(
+//     name: "limit",
+//     pattern: "campaign",
+//     defaults: new
+//     {
+//         controller = "Route",
+//         action = "Limit",
+//         limit = true
+//     },
+//     constraints: new
+//     {
+//         limit = new TimeLimitRouteConstraint("2025-10-01", "2025-10-10")
+//     }
+// );
 
-app.MapControllerRoute(
-    name: "area-default",
-    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-);
+// app.MapControllerRoute(
+//     name: "area-default",
+//     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+// );
 
 app.MapControllerRoute(
     name: "default",
