@@ -22,4 +22,17 @@ public class StateController : Controller
 
         return RedirectToAction("Cookie");
     }
+
+    public IActionResult Session()
+    {
+        ViewBag.Email = HttpContext.Session.GetString("email");
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Session(string email)
+    {
+        HttpContext.Session.SetString("email", email);
+        return RedirectToAction("Session");
+    }
 }

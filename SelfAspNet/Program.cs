@@ -40,6 +40,14 @@ builder.Services.AddDbContext<MyContext>(options =>
 
 builder.Services.AddBookRepository();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(20);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // builder.Services.AddSingleton<IMyService1, MyService>();
 // builder.Services.AddScoped<IMyService2, MyService>();
 // builder.Services.AddTransient<IMyService3, MyService>();
@@ -104,6 +112,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 app.UseResponseCaching();
