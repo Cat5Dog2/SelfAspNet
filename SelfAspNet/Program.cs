@@ -40,7 +40,14 @@ builder.Services.AddDbContext<MyContext>(options =>
 
 builder.Services.AddBookRepository();
 
-builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddDistributedMemoryCache();
+builder.Services.AddDistributedSqlServerCache(options =>
+{
+    options.ConnectionString = builder.Configuration.GetConnectionString("MyContext");
+    options.SchemaName = "dbo";
+    options.TableName = "MyCache";
+});
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromSeconds(20);
