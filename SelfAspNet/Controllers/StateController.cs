@@ -1,11 +1,18 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using SelfAspNet.Lib;
 
 namespace SelfAspNet.Controllers;
 
 public class StateController : Controller
 {
+    private readonly IDistributedCache _cache;
+    public StateController(IDistributedCache cache)
+    {
+        _cache = cache;
+    }
+
     public IActionResult Cookie()
     {
         ViewBag.Email = HttpContext.Request.Cookies["email"];
@@ -46,5 +53,17 @@ public class StateController : Controller
         }
         var usr = session.Get<Person>("usr");
         return Content($"{usr?.Name}：{usr?.Age}歳");
+    }
+
+    public async Task<IActionResult> CacheSet()
+    {
+        await _cache.SetStringAsync("Title", "独習ASP.NET Core",
+            new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(20)));
+        return Content("キャッシュを設定しました。");
+    }
+
+    public async Task<IActionResult> CacheGet()
+    {
+        return Content($"Title：{await _cache.GetStringAsync("Title")}");
     }
 }
