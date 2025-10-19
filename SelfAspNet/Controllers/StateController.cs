@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using SelfAspNet.Lib;
 
 namespace SelfAspNet.Controllers;
 
@@ -34,5 +35,16 @@ public class StateController : Controller
     {
         HttpContext.Session.SetString("email", email);
         return RedirectToAction("Session");
+    }
+
+    public IActionResult Json()
+    {
+        var session = HttpContext.Session;
+        if (session.Get<Person>("usr") == null)
+        {
+            session.Set("usr", new Person("山田雫", 18));
+        }
+        var usr = session.Get<Person>("usr");
+        return Content($"{usr?.Name}：{usr?.Age}歳");
     }
 }
