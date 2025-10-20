@@ -111,6 +111,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStatusCodePages("text/html;charset=utf8", "{0}：ページを正しく表示出来ませんでした。");
+
 app.UseHttpMethodOverride(new HttpMethodOverrideOptions
 {
     FormFieldName = "_method"
