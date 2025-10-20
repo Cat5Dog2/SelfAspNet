@@ -66,4 +66,9 @@ public class StateController : Controller
     {
         return Content($"Title：{await _cache.GetStringAsync("Title")}");
     }
+
+    public IActionResult ContextAttr()
+    {
+        return Content(HttpContext.Items["current"]?.ToString() ?? "No Data");
+    }
 }

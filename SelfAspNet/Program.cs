@@ -132,6 +132,12 @@ app.UseCookiePolicy(new CookiePolicyOptions
     Secure = CookieSecurePolicy.Always
 });
 
+app.Use(async (context, next) =>
+{
+    context.Items["current"] = DateTime.Now;
+    await next.Invoke();
+});
+
 // app.MapControllerRoute(
 //     name: "article",
 //     pattern: @"article/{aid:regex(^\d{{1,3}}$)}",
