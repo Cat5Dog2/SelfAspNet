@@ -111,7 +111,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseStatusCodePages("text/html;charset=utf8", "{0}：ページを正しく表示出来ませんでした。");
+app.UseStatusCodePagesWithReExecute("/error/catch/{0}");
 
 app.UseHttpMethodOverride(new HttpMethodOverrideOptions
 {
