@@ -127,6 +127,15 @@ app.UseStaticFiles(new StaticFileOptions
     ),
     RequestPath = "/storage"
 });
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = staticContent =>
+    {
+        staticContent.Context.Response.Headers.Append(
+            "Cache-Control", $"public, max-age={60 * 60 * 24 * 3}"
+        );
+    }
+});
 
 app.UseRouting();
 
