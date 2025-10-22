@@ -10,6 +10,7 @@ using SelfAspNet.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -98,11 +99,11 @@ builder.Services.Configure<RouteOptions>(options =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var provider = scope.ServiceProvider;
-    await Seed.Initialize(provider);
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var provider = scope.ServiceProvider;
+//     await Seed.Initialize(provider);
+// }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -127,6 +128,11 @@ app.UseStaticFiles(new StaticFileOptions
     ),
     RequestPath = "/storage"
 });
+
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings.Add(".ace", "application/octet-stream");
+provider.Mappings.Remove(".gif");
+
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = staticContent =>
@@ -134,7 +140,8 @@ app.UseStaticFiles(new StaticFileOptions
         staticContent.Context.Response.Headers.Append(
             "Cache-Control", $"public, max-age={60 * 60 * 24 * 3}"
         );
-    }
+    },
+    ContentTypeProvider = provider
 });
 
 app.UseRouting();
