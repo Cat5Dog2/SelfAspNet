@@ -9,6 +9,7 @@ using SelfAspNet.Lib;
 using SelfAspNet.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -119,6 +120,13 @@ app.UseHttpMethodOverride(new HttpMethodOverrideOptions
 });
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "MyStorage")
+    ),
+    RequestPath = "/storage"
+});
 
 app.UseRouting();
 
