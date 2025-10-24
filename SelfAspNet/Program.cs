@@ -8,6 +8,7 @@ using SelfAspNet.CompiledModels;
 using SelfAspNet.Lib;
 using SelfAspNet.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.StaticFiles;
@@ -27,7 +28,12 @@ builder.Services.AddControllersWithViews(options =>
     // options.Filters.Add<MyAppFilterAttribute>(int.MaxValue);
     // options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
     // options.CacheProfiles.Add("MyCache", new CacheProfile { Duration = 300 });
-}).AddSessionStateTempDataProvider();
+})
+.AddSessionStateTempDataProvider()
+.AddViewLocalization(
+    LanguageViewLocationExpanderFormat.Suffix,
+    options => options.ResourcesPath = "Resources"
+);
 
 builder.Services.AddScoped<LogExceptionFilter>();
 
@@ -156,6 +162,15 @@ app.UseCookiePolicy(new CookiePolicyOptions
     CheckConsentNeeded = _ => true,
     MinimumSameSitePolicy = SameSiteMode.Lax,
     Secure = CookieSecurePolicy.Always
+});
+
+app.UseRequestLocalization(options =>
+{
+    var cultures = new[] { "ja", "de", "en" };
+    options
+        .SetDefaultCulture(cultures[0])
+        .AddSupportedCultures(cultures)
+        .AddSupportedUICultures(cultures);
 });
 
 app.Use(async (context, next) =>
