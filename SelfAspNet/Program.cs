@@ -170,7 +170,8 @@ app.UseRequestLocalization(options =>
     options
         .SetDefaultCulture(cultures[0])
         .AddSupportedCultures(cultures)
-        .AddSupportedUICultures(cultures);
+        .AddSupportedUICultures(cultures)
+        .AddInitialRequestCultureProvider(new RouteValueRequestCultureProvider());
 });
 
 app.Use(async (context, next) =>
@@ -222,5 +223,10 @@ app.Use(async (context, next) =>
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "culture",
+    pattern: "i/{culture=ja}/{controller=Home}/{action=Index}/{id?}"
+);
 
 app.Run();
