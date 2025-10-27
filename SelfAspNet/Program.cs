@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.StaticFiles;
+using SelfAspNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +34,11 @@ builder.Services.AddControllersWithViews(options =>
 .AddViewLocalization(
     LanguageViewLocationExpanderFormat.Suffix,
     options => options.ResourcesPath = "Resources"
-);
+)
+.AddDataAnnotationsLocalization(options =>
+{
+    options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedResource));
+});
 
 builder.Services.AddScoped<LogExceptionFilter>();
 
