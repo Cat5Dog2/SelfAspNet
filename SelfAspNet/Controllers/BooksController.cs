@@ -32,6 +32,7 @@ namespace SelfAspNet.Controllers
         // GET: Books
         public async Task<IActionResult> Index()
         {
+            ViewBag.Success = TempData["Success"];
             return View(await _rep.GetAllAsync());
         }
 
@@ -70,6 +71,7 @@ namespace SelfAspNet.Controllers
             if (ModelState.IsValid)
             {
                 await _rep.CreateAsync(book);
+                TempData["Success"] = $"「{book.Title}」を登録しました。";
                 return RedirectToAction(nameof(Index));
             }
             return View(book);
