@@ -38,4 +38,9 @@ public class I18nController : Controller
         ViewBag.Common = _sharedLocalizer["Common"];
         return View();
     }
+
+    public IActionResult Template()
+    {
+        return View();
+    }
 }
