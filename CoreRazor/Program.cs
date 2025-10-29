@@ -1,7 +1,16 @@
+using SelfAspNet.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<MyContext>(options => 
+  options.UseSqlServer(
+    builder.Configuration.GetConnectionString("MyContext")
+  )
+);
 
 var app = builder.Build();
 
