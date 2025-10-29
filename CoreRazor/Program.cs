@@ -9,7 +9,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<MyContext>(options => 
   options.UseSqlServer(
     builder.Configuration.GetConnectionString("MyContext")
-  )
+  ).UseLazyLoadingProxies()
 );
 
 var app = builder.Build();
