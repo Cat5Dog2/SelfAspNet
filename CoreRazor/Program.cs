@@ -1,16 +1,22 @@
 using SelfAspNet.Models;
 using Microsoft.EntityFrameworkCore;
+using CoreRazor.Lib;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages().AddMvcOptions(options =>
+{
+  options.Filters.AddService<MyLogFilter>();
+});
 
-builder.Services.AddDbContext<MyContext>(options => 
+builder.Services.AddDbContext<MyContext>(options =>
   options.UseSqlServer(
     builder.Configuration.GetConnectionString("MyContext")
   ).UseLazyLoadingProxies()
 );
+
+builder.Services.AddScoped<MyLogFilter>();
 
 var app = builder.Build();
 
