@@ -21,10 +21,19 @@ namespace CoreApi.Controllers
         }
 
         // GET: api/Books
+        // [HttpGet]
+        // public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        // {
+        //     return await _context.Books.ToListAsync();
+        // }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        [Produces("application/xml", "application/json")]
+        [ProducesResponseType(typeof(BookList), StatusCodes.Status200OK)]
+        public async Task<ActionResult<BookList>> GetBooks()
         {
-            return await _context.Books.ToListAsync();
+            var list = await _context.Books.ToListAsync();
+            return new BookList { Items = list };
         }
 
         // GET: api/Books/5

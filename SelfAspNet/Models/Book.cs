@@ -1,11 +1,13 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using SelfAspNet.Lib;
 
 namespace SelfAspNet.Models;
 
+[XmlRoot("Book")]
 public class Book
 {
     [Display(Name = "ID")]
@@ -18,6 +20,7 @@ public class Book
     // [DataType(DataType.ImageUrl)]
     [Required(ErrorMessage = "RequiredError")]
     [Display(Name = "Book_Isbn")]
+    [XmlElement("Isbn")]
     public string Isbn { get; set; } = String.Empty;
 
     // [Required(ErrorMessage = "{0}は必須です。")]
@@ -25,6 +28,7 @@ public class Book
     // [Display(Name = "タイトル")]
     [Required(ErrorMessage = "RequiredError")]
     [Display(Name = "Book_Title")]
+    [XmlElement("Title")]
     public string Title { get; set; } = String.Empty;
 
     // [Range(10, 10000, ErrorMessage = "{0}は{1} ~ {2}の間で指定してください。")]
@@ -32,6 +36,7 @@ public class Book
     // [Display(Name = "価格")]
     [Range(10, 10000, ErrorMessage = "RangeError")]
     [Display(Name = "Book_Price")]
+    [XmlElement("Price")]
     public int Price { get; set; }
 
     //[RegularExpression("翔泳社|技術評論社|SBクリエイティブ|日経BP|森北出版",
@@ -40,6 +45,7 @@ public class Book
     // [Display(Name = "出版社")]
     [Required(ErrorMessage = "RequiredError")]
     [Display(Name = "Book_Publisher")]
+    [XmlElement("Publisher")]
     public string Publisher { get; set; } = String.Empty;
 
     // [Range(typeof(DateTime), "2010-01-01", "2029-12-31",
@@ -48,15 +54,30 @@ public class Book
     // [DataType(DataType.Date)]
     [Required(ErrorMessage = "RequiredError")]
     [Display(Name = "Book_Published")]
+    [XmlElement("Published")]
     public DateTime Published { get; set; }
 
     // [Display(Name = "配布サンプル")]
     [Display(Name = "Book_Sample")]
+    [XmlElement("Sample")]
     public bool Sample { get; set; }
 
     [Timestamp]
+    [XmlElement("RowVersion", DataType = "base64Binary")]
     public byte[]? RowVersion { get; set; }
 
+    [XmlArray("Reviews")]
+    [XmlArrayItem("Review")]
     public virtual ICollection<Review> Reviews { get; } = new List<Review>();
+
+    [XmlArray("Authors")]
+    [XmlArrayItem("Author")]
     public virtual ICollection<Author> Authors { get; } = new List<Author>();
+}
+
+[XmlRoot("Books")]
+public class BookList
+{
+    [XmlElement("Book")]
+    public List<Book> Items { get; set; } = new();
 }
