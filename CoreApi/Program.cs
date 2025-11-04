@@ -12,7 +12,11 @@ builder.Services.AddDbContext<MyContext>(options =>
 // Add services to the container.
 
 builder.Services.AddControllers()
-  .AddXmlSerializerFormatters();
+  .AddXmlSerializerFormatters()
+  .AddJsonOptions(options =>
+  {
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+  });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
