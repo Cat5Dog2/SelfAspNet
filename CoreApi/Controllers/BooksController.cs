@@ -32,7 +32,9 @@ namespace CoreApi.Controllers
         [ProducesResponseType(typeof(BookList), StatusCodes.Status200OK)]
         public async Task<ActionResult<BookList>> GetBooks()
         {
-            var list = await _context.Books.ToListAsync();
+            var list = await _context.Books
+                .Include(b => b.Authors).Include(b => b.Reviews)
+                .ToListAsync();
             return new BookList { Items = list };
         }
 
