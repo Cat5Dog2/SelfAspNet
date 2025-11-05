@@ -1,6 +1,7 @@
 using SelfAspNet.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,26 @@ builder.Services.AddControllers()
   });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+  options.SwaggerDoc("v2", new OpenApiInfo
+  {
+    Title = "Book API",
+    Description = "書籍を管理するためのASP.NET Core Web API",
+    Version = "v2",
+    TermsOfService = new Uri("https://wings.msn.to/terms"),
+    Contact = new OpenApiContact
+    {
+      Name = "お問い合わせ",
+      Url = new Uri("https://wings.msn.to/contact")
+    },
+    License = new OpenApiLicense
+    {
+      Name = "ライセンス",
+      Url = new Uri("https://wings.msn.to/license")
+    }
+  });
+});
 
 var app = builder.Build();
 
@@ -30,7 +50,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+      c.SwaggerEndpoint("/swagger/v2/swagger.json", "CoreApi");
+    });
 }
 
 app.UseHttpsRedirection();
