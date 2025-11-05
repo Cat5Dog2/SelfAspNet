@@ -54,7 +54,32 @@ namespace CoreApi.Controllers
 
         // PUT: api/Books/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+        /// <summary>
+        /// 既存の書籍情報を更新する
+        /// </summary>
+        /// <param name="id">書籍コード</param>
+        /// <remarks>
+        /// リクエスト情報（例）：
+        ///
+        ///     PUT /api/book/1
+        ///     {
+        ///       "isbn": "978-4-7981-9999-9",
+        ///       "title": "速習 ASP.NET Core",
+        ///       "price": 3000,
+        ///       "publisher": "WINGS",
+        ///       "published": "2024-02-07",
+        ///       "sample": true
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="204">正しく書籍情報が更新された</response>
+        /// <response code="400">引数idと更新対象の書籍コードが一致しない</response>
+        /// <response code="404">更新時に対象の書籍が削除されていた</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutBook(int id, Book book)
         {
             if (id != book.Id)

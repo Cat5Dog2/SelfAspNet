@@ -1,7 +1,8 @@
 using SelfAspNet.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,9 @@ builder.Services.AddSwaggerGen(options =>
       Url = new Uri("https://wings.msn.to/license")
     }
   });
+
+  var name = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+  options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, name));
 });
 
 var app = builder.Build();
