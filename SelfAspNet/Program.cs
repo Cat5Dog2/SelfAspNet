@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using SelfAspNet.Helpers;
 using SelfAspNet.Models;
-using SelfAspNet.CompiledModels;
 using SelfAspNet.Lib;
 using SelfAspNet.Filters;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +44,7 @@ builder.Services.AddScoped<LogExceptionFilter>();
 builder.Services.AddDbContext<MyContext>(options =>
     options
         .UseLazyLoadingProxies()
-        .UseModel(MyContextModel.Instance)
+        //.UseModel(MyContextModel.Instance)
         .UseSqlServer(
             builder.Configuration.GetConnectionString("MyContext")
         )
