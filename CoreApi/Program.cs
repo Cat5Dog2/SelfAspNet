@@ -48,16 +48,28 @@ builder.Services.AddSwaggerGen(options =>
   options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, name));
 });
 
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy(name: "CorePolicy",
+    policy =>
+    {
+      policy.WithMethods("GET")
+        .WithOrigins("https://localhost:52642", "https://wings.msn.to");
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-      c.SwaggerEndpoint("/swagger/v2/swagger.json", "CoreApi");
-    });
+  app.UseSwagger();
+  app.UseSwaggerUI(c =>
+  {
+    c.SwaggerEndpoint("/swagger/v2/swagger.json", "CoreApi");
+  });
 }
 
 app.UseHttpsRedirection();

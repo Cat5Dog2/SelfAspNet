@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+    Date: string;
+    TemperatureC: number;
+    TemperatureF: number;
+    Summary: string;
 }
 
 function App() {
@@ -28,11 +28,11 @@ function App() {
             </thead>
             <tbody>
                 {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
+                    <tr key={forecast.Date}>
+                        <td>{forecast.Date}</td>
+                        <td>{forecast.TemperatureC}</td>
+                        <td>{forecast.TemperatureF}</td>
+                        <td>{forecast.Summary}</td>
                     </tr>
                 )}
             </tbody>
@@ -47,7 +47,7 @@ function App() {
     );
 
     async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
+        const response = await fetch('https://localhost:7193/weatherforecast');
         if (response.ok) {
             const data = await response.json();
             setForecasts(data);
