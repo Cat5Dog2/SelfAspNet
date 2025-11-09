@@ -12,19 +12,32 @@ namespace SelfAspNet.Controllers
     public class BooksController : Controller
     {
         private readonly MyContext _context;
+        private readonly IBookRepository _rep;
 
-        public BooksController(MyContext context)
+        public BooksController(MyContext context, IBookRepository rep)
         {
             _context = context;
+            _rep = rep;
+        }
+
+        public async Task<IActionResult> UniqueIsbn(string isbn, int id)
+        {
+            if (await _context.Books.AnyAsync(b => b.Isbn == isbn && b.Id != id))
+            {
+                return Json("ISBNコードは既に登録されています。");
+            }
+            return Json(true);
         }
 
         // GET: Books
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Books.ToListAsync());
+            ViewBag.Success = TempData["Success"];
+            return View(await _rep.GetAllAsync());
         }
 
         // GET: Books/Details/5
+        [ResponseCache(Duration = 60, VaryByQueryKeys = new [] { "mode" })]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,8 +70,8 @@ namespace SelfAspNet.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
-                await _context.SaveChangesAsync();
+                await _rep.CreateAsync(book);
+                TempData["Success"] = $"「{book.Title}」を登録しました。";
                 return RedirectToAction(nameof(Index));
             }
             return View(book);
@@ -89,9 +102,9 @@ namespace SelfAspNet.Controllers
         // POST: Books/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Isbn,Title,Price,Publisher,Published,Sample")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Isbn,Title,Price,Publisher,Published,Sample,RowVersion")] Book book)
         {
             if (id != book.Id)
             {
@@ -113,7 +126,9 @@ namespace SelfAspNet.Controllers
                     }
                     else
                     {
-                        throw;
+                        ModelState.AddModelError(string.Empty, "競合が検出されました。");
+                        return View(book);
+                        // throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
